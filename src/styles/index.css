@@ -1,3 +1,540 @@
-main section {
-    text-align: center;
+:root {
+  --bg-color: #ffffff;
+  --text-color: #1a1a1a;
+  --text-secondary: #666666;
+  --accent-color: #000000;
+  --border-color: #eeeeee;
+  --drawer-width: 380px;
+  --header-height: 64px;
+  --footer-height: 50px;
+  --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: var(--bg-color);
+}
+
+body {
+  font-family: var(--font-family);
+  color: var(--text-color);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Hide External Elements */
+#ads-right, #tablet-bottom-ad, .ad-label {
+  display: none !important;
+}
+
+/* Layout overrides for Layout.astro */
+header {
+  height: var(--header-height);
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--border-color);
+  background: white;
+  display: flex;
+  align-items: center;
+}
+
+.container {
+  display: flex;
+  flex: 1;
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  min-height: 0;
+}
+
+footer {
+  height: var(--footer-height);
+  flex-shrink: 0;
+  border-top: 1px solid var(--border-color);
+  background: white;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+/* App Container */
+.app-container {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  background: #fcfcfc;
+  flex-direction: row; /* Split screen on desktop */
+}
+
+/* Drawer Backdrop */
+.drawer-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  z-index: 1500;
+  opacity: 0;
+  visibility: hidden;
+  transition: var(--transition);
+}
+
+.drawer-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Sidebar / Drawer */
+.drawer {
+  position: relative; /* Fixed on desktop */
+  top: 0;
+  right: 0;
+  width: var(--drawer-width);
+  height: 100%;
+  background: var(--bg-color);
+  border-left: 1px solid var(--border-color);
+  z-index: 2000;
+  transition: var(--transition);
+  overflow-y: auto;
+  padding: 2.5rem 2rem;
+  flex-shrink: 0;
+}
+
+.drawer h2#settings-title {
+  font-size: 1.25rem;
+  margin-bottom: 2rem;
+  margin-top: 0;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+/* Main Content Area Refinement */
+.main-content {
+  flex: 1;
+  height: 100%;
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center horizontally for max-width container */
+  overflow-y: auto;
+  scrollbar-width: thin;
+  min-width: 0;
+}
+
+.main-content-inner {
+  width: 100%;
+  max-width: 900px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin: 0;
+}
+
+/* Tabbed Interface Styles */
+.tabs-wrapper {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  width: 100%;
+  min-height: 0;
+}
+
+.tabs-header {
+  display: flex;
+  gap: 1.5rem;
+  border-bottom: 2px solid #f0f0f0;
+  margin-bottom: 1.5rem;
+  width: 100%;
+}
+
+.tab-btn {
+  background: none;
+  border: none;
+  padding: 0.5rem 0;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  cursor: pointer;
+  position: relative;
+  transition: var(--transition);
+}
+
+.tab-btn:hover {
+  color: var(--text-color);
+}
+
+.tab-btn.active {
+  color: var(--accent-color);
+}
+
+.tab-btn.active::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--accent-color);
+}
+
+/* Sidebar / Drawer */
+.drawer {
+  position: relative; /* Fixed on desktop */
+  top: 0;
+  right: 0;
+  width: var(--drawer-width);
+  height: 100%;
+  background: var(--bg-color);
+  border-left: 1px solid var(--border-color);
+  z-index: 2000;
+  transition: var(--transition);
+  overflow-y: auto;
+  padding: 2.5rem 2rem;
+  flex-shrink: 0;
+}
+
+/* Unified Button System */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.625rem 1.25rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: var(--transition);
+  gap: 0.5rem;
+  text-decoration: none;
+  font-family: var(--font-family);
+  border: 1px solid transparent;
+}
+
+.btn-primary {
+  background: var(--accent-color);
+  color: white;
+}
+
+.btn-primary:hover {
+  background: #333;
+}
+
+.btn-outline {
+  background: transparent;
+  border-color: var(--border-color);
+  color: var(--text-color);
+}
+
+.btn-outline:hover {
+  background: #f9f9f9;
+  border-color: #d1d1d1;
+}
+
+.btn-sm {
+  padding: 0.4rem 0.75rem;
+  font-size: 0.75rem;
+}
+
+/* Form Styles */
+label {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+  margin-top: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+div > label:first-child,
+details > div > label:first-child {
+  margin-top: 0.5rem;
+}
+
+input[type="text"],
+input[type="number"],
+select,
+textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 0.875rem;
+  background: #ffffff;
+  transition: all 0.2s;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 2px rgba(0,0,0,0.03);
+}
+
+/* Custom File Upload Styling */
+.file-input-wrapper {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+.file-input-wrapper input[type="file"] {
+  font-size: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.file-input-custom {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem;
+  border: 1px dashed var(--border-color);
+  border-radius: 6px;
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  background: #fafafa;
+}
+
+/* Details/Summary */
+details {
+  margin-bottom: 1.5rem;
+}
+
+summary {
+  list-style: none;
+  padding: 0.75rem 0;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 0.9375rem;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 2px solid #f0f0f0;
+  margin-bottom: 1rem;
+}
+
+summary::after {
+  content: '+';
+  color: #ccc;
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+details[open] summary::after {
+  content: '−';
+}
+
+.tab-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 0;
+  background: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+}
+
+/* Preview and Output Scaling */
+#svg-render {
+  padding: 2.5rem;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#svg-render svg {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+}
+
+.output-textarea-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+#output-svg {
+  width: 100%;
+  height: 100%;
+  border: none;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.8125rem;
+  padding: 1.5rem;
+  background: #fafafa;
+  resize: none;
+  line-height: 1.6;
+  outline: none;
+}
+
+.actions-container {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+/* Utilities */
+.label-with-link {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+/* Modern Link as Small Button */
+.link-btn {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--accent-color);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.5rem;
+  background: #f0f0f0;
+  border-radius: 4px;
+}
+
+.link-btn:hover {
+  background: #e5e5e5;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+  :root {
+    --drawer-width: 85vw;
+    --header-height: 56px;
+  }
+  
+  .app-container {
+    flex-direction: column;
+  }
+
+  .drawer {
+    position: fixed;
+    right: calc(-1 * var(--drawer-width));
+    left: auto;
+    width: var(--drawer-width);
+    box-shadow: -20px 0 60px rgba(0,0,0,0.1);
+    border-left: 1px solid var(--border-color);
+    border-right: none;
+    z-index: 2001;
+    padding: 2rem 1.5rem;
+  }
+
+  .drawer.open {
+    right: 0;
+  }
+
+  .menu-toggle {
+    display: flex; /* Always visible on mobile */
+    position: fixed;
+    top: 50%;
+    right: 0.75rem; /* Starting position */
+    transform: translateY(-50%);
+    z-index: 2500;
+    background: var(--accent-color);
+    border: 1px solid var(--accent-color);
+    width: 44px;
+    height: 44px;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: var(--transition);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    color: white;
+  }
+
+  .menu-toggle.drawer-open {
+    right: calc(var(--drawer-width) + 0.75rem); /* Move together with drawer edge */
+    background: white;
+    color: var(--accent-color);
+    border-color: var(--border-color);
+    box-shadow: 4px 4px 12px rgba(0,0,0,0.1);
+  }
+
+  .main-content {
+    padding: 1.25rem;
+    align-items: flex-start;
+  }
+
+  .main-content-inner {
+    width: 100%;
+    max-width: none;
+    gap: 1rem;
+  }
+
+  /* Optimize buttons for single row */
+  .actions-container {
+    display: flex;
+    flex-wrap: nowrap; /* Force one row */
+    overflow-x: auto;
+    padding: 0.25rem 0;
+    gap: 0.35rem; /* Even smaller gap */
+    width: 100%;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .actions-container::-webkit-scrollbar {
+    display: none;
+  }
+
+  .btn {
+    padding: 0.45rem 0.6rem;
+    font-size: 0.6rem; /* Even smaller font */
+    white-space: nowrap;
+    min-width: fit-content;
+    border-radius: 4px;
+    letter-spacing: 0;
+    flex-shrink: 0;
+  }
+
+  .btn-sm {
+    padding: 0.35rem 0.5rem;
+    font-size: 0.65rem;
+  }
+
+  .tab-btn {
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+  }
+}
+
+/* Hide toggle on desktop */
+@media (min-width: 769px) {
+  .menu-toggle {
+    display: none;
+  }
 }

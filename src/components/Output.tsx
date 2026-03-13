@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Copy, Download, Link, Box } from 'lucide-react';
 
 interface OutputProps {
   state: any;
@@ -6,32 +7,37 @@ interface OutputProps {
 
 export default function Output({ state }: OutputProps) {
   const { svgOutput, dxfOutput, errorMessage, text } = state;
-  const [copyButtonText, setCopyButtonText] = useState('copy to clipboard');
+  const [activeTab, setActiveTab] = useState<'preview' | 'code'>('preview');
+  const [copyStatus, setCopyStatus] = useState('Copy SVG');
 
   const copyToClipboard = () => {
     const textarea = document.getElementById('output-svg') as HTMLTextAreaElement;
     if (textarea) {
       textarea.select();
       document.execCommand('copy');
-      setCopyButtonText('copied');
-      setTimeout(() => {
-        setCopyButtonText('copy to clipboard');
-      }, 2000);
+      setCopyStatus('Copied!');
+      setTimeout(() => setCopyStatus('Copy SVG'), 2000);
     }
   };
 
   const downloadSvg = () => {
+    const blob = new Blob([svgOutput], { type: 'image/svg+xml' });
+    const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
-    a.href = 'data:image/svg+xml;base64,' + window.btoa(svgOutput);
-    a.download = `${text}.svg`;
+    a.href = url;
+    a.download = `${text || 'font'}.svg`;
     a.click();
+    URL.revokeObjectURL(url);
   };
 
   const downloadDxf = () => {
+    const blob = new Blob([dxfOutput], { type: 'application/dxf' });
+    const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
-    a.href = 'data:application/dxf;base64,' + window.btoa(dxfOutput);
-    a.download = `${text}.dxf`;
+    a.href = url;
+    a.download = `${text || 'font'}.dxf`;
     a.click();
+    URL.revokeObjectURL(url);
   };
 
   const createLink = () => {
@@ -39,54 +45,84 @@ export default function Output({ state }: OutputProps) {
     navigator.clipboard.writeText(url).then(() => {
       const btn = document.getElementById('create-link');
       if (btn) {
-        btn.textContent = 'copied';
+        const originalText = btn.innerHTML;
+        btn.innerText = 'Copied Link!';
         setTimeout(() => {
-          btn.textContent = 'Create link';
+          btn.innerHTML = originalText;
         }, 2000);
       }
     });
   };
 
   return (
-    <main>
-      <section>
-        {errorMessage && (
-          <div id="error-display" style={{ color: 'red', padding: '10px' }}>
-            {errorMessage}
-          </div>
-        )}
-        <div 
-          id="svg-render" 
-          dangerouslySetInnerHTML={{ __html: svgOutput }}
-          style={{ marginBottom: '20px' }}
-        />
-      </section>
-
-      <section>
-        <h2>SVG Output</h2>
-        <div className="textarea-container">
-          <textarea 
-            id="output-svg" 
-            readOnly
-            value={svgOutput}
-            style={{ width: '100%', minHeight: '200px', fontFamily: 'monospace' }}
-          />
-          <div className="buttons-container">
-            <button className="btn" onClick={copyToClipboard}>
-              {copyButtonText}
-            </button>
-            <button className="btn" onClick={downloadSvg}>
-              Download Svg
-            </button>
-            <button id="create-link" className="btn" onClick={createLink}>
-              Create link
-            </button>
-            <button className="btn" onClick={downloadDxf}>
-              Download Dxf
-            </button>
-          </div>
+    <div className="main-content-inner">
+      {errorMessage && (
+        <div id="error-display" style={{ 
+          color: '#e53e3e', 
+          background: '#fff5f5', 
+          padding: '0.75rem', 
+          borderRadius: '4px',
+          marginBottom: '1rem',
+          fontSize: '0.8125rem',
+          textAlign: 'center',
+          boxShadow: '0 2px 5px rgba(0,0,0,0.05)'
+        }}>
+          {errorMessage}
         </div>
-      </section>
-    </main>
+      )}
+
+      <div className="tabs-wrapper">
+        <div className="tabs-header">
+          <button 
+            className={`tab-btn ${activeTab === 'preview' ? 'active' : ''}`}
+            onClick={() => setActiveTab('preview')}
+          >
+            Preview
+          </button>
+          <button 
+            className={`tab-btn ${activeTab === 'code' ? 'active' : ''}`}
+            onClick={() => setActiveTab('code')}
+          >
+            SVG Code
+          </button>
+        </div>
+
+        <div className="tab-content">
+          {activeTab === 'preview' ? (
+            <div 
+              id="svg-render" 
+              dangerouslySetInnerHTML={{ __html: svgOutput }}
+            />
+          ) : (
+            <div className="output-textarea-container">
+              <textarea 
+                id="output-svg" 
+                readOnly
+                value={svgOutput}
+              />
+            </div>
+          )}
+        </div>
+      </div>
+
+      <div className="actions-container">
+        <button className="btn btn-primary" onClick={copyToClipboard}>
+          <Copy size={16} />
+          {copyStatus}
+        </button>
+        <button className="btn btn-outline" onClick={downloadSvg}>
+          <Download size={16} />
+          SVG
+        </button>
+        <button className="btn btn-outline" onClick={downloadDxf}>
+          <Box size={16} />
+          DXF
+        </button>
+        <button id="create-link" className="btn btn-outline" onClick={createLink}>
+          <Link size={16} />
+          Share Link
+        </button>
+      </div>
+    </div>
   );
 }

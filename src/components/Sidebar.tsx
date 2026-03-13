@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 // @ts-ignore
 import makerjs from 'makerjs';
 import * as opentype from 'opentype.js';
-import { ExternalLink } from 'lucide-react';
+import { ExternalLink, Upload } from 'lucide-react';
 
 interface SidebarProps {
   state: any;
@@ -62,20 +62,21 @@ export default function Sidebar({ state, setState }: SidebarProps) {
   };
 
   return (
-    <aside>
+    <div className="sidebar-content">
+      <h2 id="settings-title">Settings</h2>
+      
       <details open>
-        <summary>Font Settings</summary>
+        <summary>Font</summary>
         <div>
           <div className="label-with-link">
-            <label>
-              Google font:
-            </label>
+            <label>Google font</label>
             <a
               href="https://fonts.google.com/"
               target="_blank"
               rel="noopener noreferrer"
+              className="link-btn"
             >
-              Browse fonts <ExternalLink size={14} />
+              Browse <ExternalLink size={12} />
             </a>
           </div>
           <select
@@ -87,224 +88,223 @@ export default function Sidebar({ state, setState }: SidebarProps) {
             {fontOptions}
           </select>
 
-          <label>
-            variant:
-            <select
-              id="font-variant"
-              value={fontVariant}
-              onChange={(e) => setState(prev => ({ ...prev, fontVariant: e.target.value }))}
-              disabled={!!customFont}
-            >
-              {fontVariants.map((variant: string) => (
-                <option key={variant} value={variant}>
-                  {variant}
-                </option>
-              ))}
-            </select>
-          </label>
+          <label>Variant</label>
+          <select
+            id="font-variant"
+            value={fontVariant}
+            onChange={(e) => setState(prev => ({ ...prev, fontVariant: e.target.value }))}
+            disabled={!!customFont}
+          >
+            {fontVariants.map((variant: string) => (
+              <option key={variant} value={variant}>
+                {variant}
+              </option>
+            ))}
+          </select>
 
-          <label>
-            (optional) upload font:
+          <label>Upload custom font</label>
+          <div className="file-input-wrapper">
+            <div className="file-input-custom">
+              <Upload size={14} style={{ marginRight: '8px' }} />
+              {customFont ? 'Custom font loaded' : 'Choose .ttf / .otf file'}
+            </div>
             <input
               id="font-upload"
               type="file"
               onChange={handleFileUpload}
               accept=".ttf,.otf,.woff,.woff2"
             />
-          </label>
-          {customFont && <button onClick={handleRemoveFont}>Remove</button>}
-
+          </div>
+          
+          {customFont && (
+            <div style={{ marginTop: '0.75rem', display: 'flex', justifyContent: 'flex-end' }}>
+              <button 
+                className="btn btn-outline btn-sm"
+                onClick={handleRemoveFont}
+                style={{ color: '#e53e3e', borderColor: '#feb2b2' }}
+              >
+                Remove Custom Font
+              </button>
+            </div>
+          )}
         </div>
       </details>
 
       <details open>
-        <summary>Text Settings</summary>
+        <summary>Text</summary>
         <div>
-          <label>
-            text:
-            <textarea
-              id="input-text"
-              rows={3}
-              value={text}
-              onChange={(e) => setState(prev => ({ ...prev, text: e.target.value }))}
-            />
-          </label>
+          <label>Input text</label>
+          <textarea
+            id="input-text"
+            rows={3}
+            value={text}
+            onChange={(e) => setState(prev => ({ ...prev, text: e.target.value }))}
+          />
 
-          <label>
-            size:
-            <input
-              type="number"
-              id="input-size"
-              value={size}
-              onChange={(e) => setState(prev => ({ ...prev, size: Number(e.target.value) }))}
-            />
-          </label>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+            <div>
+              <label>Size</label>
+              <input
+                type="number"
+                id="input-size"
+                value={size}
+                onChange={(e) => setState(prev => ({ ...prev, size: Number(e.target.value) }))}
+              />
+            </div>
+            <div>
+              <label>Line height</label>
+              <input
+                type="number"
+                id="input-line-height"
+                value={lineHeight}
+                onChange={(e) => setState(prev => ({ ...prev, lineHeight: Number(e.target.value) }))}
+                step="0.1"
+                min="0.1"
+              />
+            </div>
+          </div>
 
-          <label>
-            line height:
-            <span title="when you have multiline text">ℹ️</span>:
-            <input
-              type="number"
-              id="input-line-height"
-              value={lineHeight}
-              onChange={(e) => setState(prev => ({ ...prev, lineHeight: Number(e.target.value) }))}
-              step="0.1"
-              min="0.1"
-            />
-          </label>
-
-          <label>
-            kerning:
+          <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
             <input
               type="checkbox"
               id="input-kerning"
               checked={kerning}
               onChange={(e) => setState(prev => ({ ...prev, kerning: e.target.checked }))}
+              style={{ width: 'auto' }}
             />
-          </label>
-
-        </div>
-      </details>
-
-      <details open>
-        <summary>Stroke</summary>
-        <div>
-          <label>
-            Stroke color:
-            <input
-              type="color"
-              id="input-stroke"
-              value={stroke}
-              onChange={(e) => setState(prev => ({ ...prev, stroke: e.target.value }))}
-            />
-            <input
-              type="text"
-              value={stroke}
-              onChange={(e) => setState(prev => ({ ...prev, stroke: e.target.value }))}
-              placeholder="#000000"
-              style={{ marginLeft: '8px', width: '80px' }}
-            />
-          </label>
-
-          <label>
-            Stroke Width:
-            <input
-              type="text"
-              id="input-stroke-width"
-              value={strokeWidth}
-              onChange={(e) => setState(prev => ({ ...prev, strokeWidth: e.target.value }))}
-            />
-          </label>
-
-          <label>
-            Non-scaling stroke:
-            <input
-              type="checkbox"
-              id="input-stroke-non-scaling"
-              checked={strokeNonScaling}
-              onChange={(e) => setState(prev => ({ ...prev, strokeNonScaling: e.target.checked }))}
-            />
-          </label>
-        </div>
-      </details>
-
-      <details open>
-        <summary>Fill</summary>
-        <div>
-          <label>
-            fill:
-            <input
-              type="checkbox"
-              id="input-filled"
-              checked={filled}
-              onChange={(e) => setState(prev => ({ ...prev, filled: e.target.checked }))}
-            />
-          </label>
-
-          <label>
-            Fill color:
-            <input
-              type="color"
-              id="input-fill"
-              value={fill}
-              onChange={(e) => setState(prev => ({ ...prev, fill: e.target.value }))}
-            />
-            <input
-              type="text"
-              value={fill}
-              onChange={(e) => setState(prev => ({ ...prev, fill: e.target.value }))}
-              placeholder="#000000"
-              style={{ marginLeft: '8px', width: '80px' }}
-            />
-          </label>
-
-          <label>
-            Fill rule:
-            <select
-              id="input-fill-rule"
-              value={fillRule}
-              onChange={(e) => setState(prev => ({ ...prev, fillRule: e.target.value as 'evenodd' | 'nonzero' }))}
-            >
-              <option value="evenodd">evenodd</option>
-              <option value="nonzero">nonzero</option>
-            </select>
+            <span>Enable kerning</span>
           </label>
         </div>
       </details>
 
       <details>
-        <summary>Options</summary>
+        <summary>Stroke & Fill</summary>
         <div>
-          <label>
-            union:
+          <label>Stroke color</label>
+          <div style={{ display: 'flex', gap: '8px' }}>
+            <input
+              type="color"
+              id="input-stroke"
+              value={stroke}
+              onChange={(e) => setState(prev => ({ ...prev, stroke: e.target.value }))}
+              style={{ width: '40px', padding: '0', height: '40px' }}
+            />
+            <input
+              type="text"
+              value={stroke}
+              onChange={(e) => setState(prev => ({ ...prev, stroke: e.target.value }))}
+              placeholder="#000000"
+            />
+          </div>
+
+          <label>Stroke width</label>
+          <input
+            type="text"
+            id="input-stroke-width"
+            value={strokeWidth}
+            onChange={(e) => setState(prev => ({ ...prev, strokeWidth: e.target.value }))}
+          />
+
+          <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
+            <input
+              type="checkbox"
+              id="input-stroke-non-scaling"
+              checked={strokeNonScaling}
+              onChange={(e) => setState(prev => ({ ...prev, strokeNonScaling: e.target.checked }))}
+              style={{ width: 'auto' }}
+            />
+            <span>Non-scaling stroke</span>
+          </label>
+
+          <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', marginTop: '1.5rem' }}>
+            <input
+              type="checkbox"
+              id="input-filled"
+              checked={filled}
+              onChange={(e) => setState(prev => ({ ...prev, filled: e.target.checked }))}
+              style={{ width: 'auto' }}
+            />
+            <span>Enable fill</span>
+          </label>
+
+          <label>Fill color</label>
+          <div style={{ display: 'flex', gap: '8px' }}>
+            <input
+              type="color"
+              id="input-fill"
+              value={fill}
+              onChange={(e) => setState(prev => ({ ...prev, fill: e.target.value }))}
+              style={{ width: '40px', padding: '0', height: '40px' }}
+            />
+            <input
+              type="text"
+              value={fill}
+              onChange={(e) => setState(prev => ({ ...prev, fill: e.target.value }))}
+              placeholder="#000000"
+            />
+          </div>
+
+          <label>Fill rule</label>
+          <select
+            id="input-fill-rule"
+            value={fillRule}
+            onChange={(e) => setState(prev => ({ ...prev, fillRule: e.target.value as 'evenodd' | 'nonzero' }))}
+          >
+            <option value="evenodd">evenodd</option>
+            <option value="nonzero">nonzero</option>
+          </select>
+        </div>
+      </details>
+
+      <details>
+        <summary>Advanced Options</summary>
+        <div>
+          <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
             <input
               type="checkbox"
               id="input-union"
               checked={union}
               onChange={(e) => setState(prev => ({ ...prev, union: e.target.checked }))}
+              style={{ width: 'auto' }}
             />
+            <span>Union paths</span>
           </label>
 
-          <label>
-            separate characters:
+          <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
             <input
               type="checkbox"
               id="input-separate"
               checked={separate}
               onChange={(e) => setState(prev => ({ ...prev, separate: e.target.checked }))}
+              style={{ width: 'auto' }}
             />
+            <span>Separate characters</span>
           </label>
 
-          <label>
-            bezier accuracy
-            <span title="0.5 = accurate to half a pixel &#013;.001 = accurate to 1/1000th of a pixel &#013;smaller numbers take longer to compute &#013;leave blank for auto">ℹ️</span>:
-            <input
-              type="text"
-              id="input-bezier-accuracy"
-              placeholder="auto"
-              value={bezierAccuracy}
-              onChange={(e) => setState(prev => ({ ...prev, bezierAccuracy: e.target.value }))}
-            />
-          </label>
+          <label>Bezier accuracy (auto if empty)</label>
+          <input
+            type="text"
+            id="input-bezier-accuracy"
+            placeholder="auto"
+            value={bezierAccuracy}
+            onChange={(e) => setState(prev => ({ ...prev, bezierAccuracy: e.target.value }))}
+          />
 
-          <label>
-            Dxf Units:
-            <select
-              id="dxf-units"
-              value={dxfUnits}
-              onChange={(e) => setState(prev => ({ ...prev, dxfUnits: e.target.value }))}
-            >
-              <option value="">Select units...</option>
-              {Object.values(makerjs.unitType).map((unit: any) => (
-                <option key={unit} value={unit}>
-                  {unit}
-                </option>
-              ))}
-            </select>
-          </label>
+          <label>DXF Units</label>
+          <select
+            id="dxf-units"
+            value={dxfUnits}
+            onChange={(e) => setState(prev => ({ ...prev, dxfUnits: e.target.value }))}
+          >
+            <option value="">Select units...</option>
+            {Object.values(makerjs.unitType).map((unit: any) => (
+              <option key={unit} value={unit}>
+                {unit}
+              </option>
+            ))}
+          </select>
         </div>
       </details>
-
-    </aside >
+    </div>
   );
 }

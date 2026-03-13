@@ -3,9 +3,11 @@ import Sidebar from './Sidebar';
 import Output from './Output';
 import { loadGoogleFonts, renderSvg } from '../lib/fontUtils';
 import { defaultState } from '../store/appStore';
+import { ChevronRight, ChevronLeft } from 'lucide-react';
 
 export default function App() {
   const [state, setState] = useState(defaultState);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   useEffect(() => {
     loadGoogleFonts().then(data => {
@@ -40,10 +42,31 @@ export default function App() {
     state.fillRule,
   ]);
 
+  const toggleDrawer = () => setIsDrawerOpen(!isDrawerOpen);
+  const closeDrawer = () => setIsDrawerOpen(false);
+
   return (
-    <>
-      <Sidebar state={state} setState={setState} />
-      <Output state={state} />
-    </>
+    <div className="app-container">
+      <div 
+        className={`drawer-overlay ${isDrawerOpen ? 'active' : ''}`} 
+        onClick={closeDrawer}
+      />
+
+      <main className="main-content">
+        <Output state={state} />
+      </main>
+
+      <div className={`drawer ${isDrawerOpen ? 'open' : ''}`}>
+        <Sidebar state={state} setState={setState} />
+      </div>
+
+      <button 
+        className={`menu-toggle ${isDrawerOpen ? 'drawer-open' : ''}`} 
+        onClick={toggleDrawer}
+        aria-label={isDrawerOpen ? "Close settings" : "Open settings"}
+      >
+        {isDrawerOpen ? <ChevronRight size={24} /> : <ChevronLeft size={24} />}
+      </button>
+    </div>
   );
 }
