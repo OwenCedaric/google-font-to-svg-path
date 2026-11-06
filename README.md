@@ -39,6 +39,65 @@
 
 ---
 
+## API & CLI Integration
+
+In addition to the web UI, FontSVG provides multiple interfaces for external callers and automation:
+
+### 1. Command-Line Interface (CLI)
+```bash
+# Generate standalone SVG
+node bin/font-to-svg.mjs --text "Cedaric" --font "Arial" --fill "#2563eb" -o ./output.svg
+
+# Extract only SVG path data ("M ... Z") for React / HTML embedding
+node bin/font-to-svg.mjs --text "Logo" --font "Georgia" --format path
+
+# Weld overlapping cursive letter outlines with boolean union
+node bin/font-to-svg.mjs --text "Signature" --font "Apple Chancery" --union -o ./cursive.svg
+
+# Export CAD DXF drawing for laser / CNC cutting
+node bin/font-to-svg.mjs --text "CUT" --font "Impact" --format dxf --dxf-units mm -o ./cut.dxf
+```
+
+### 2. Programmatic Node.js SDK
+```javascript
+import { convertTextToSvg } from 'google-font-to-svg-path';
+
+const { svg, path, bounds } = await convertTextToSvg({
+  text: 'Cedaric',
+  font: 'Arial', // Google Font name, system font, or path to .ttf file
+  size: 100,
+  union: true,   // Boolean union for cursive fonts
+  filled: true,
+  fill: '#2563eb',
+  format: 'svg'
+});
+```
+
+### 3. Local REST API Server
+```bash
+# Start API server on port 3000
+npm run api
+
+# 1. Fetch live SVG image directly
+curl "http://localhost:3000/api/svg?text=Cedaric&font=Arial&fill=%232563eb"
+
+# 2. Fetch JSON path and dimensions
+curl "http://localhost:3000/api/path?text=Cedaric&font=Arial"
+
+# 3. POST JSON conversion
+curl -X POST http://localhost:3000/api/convert \
+  -H "Content-Type: application/json" \
+  -d '{"text": "Cedaric", "font": "Arial", "union": true, "fill": "#2563eb"}'
+```
+
+---
+
+## AI Agent Skill (Antigravity)
+
+The project includes an Antigravity Agent Skill at [`.agents/skills/font-to-svg/`](.agents/skills/font-to-svg/SKILL.md). AI coding agents can automatically invoke this skill to generate SVG vectors, choose fonts, weld cursive typography, and inline path data into codebases.
+
+---
+
 ## AI & Agent Integration (GEO)
 
 FontSVG provides standardized endpoints for LLM and AI agent retrieval:

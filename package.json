@@ -3,11 +3,18 @@
   "version": "1.1.0",
   "description": "Convert Google Fonts and custom fonts to clean SVG paths and CAD DXF outlines",
   "main": "index.js",
+  "types": "index.d.ts",
+  "bin": {
+    "font-to-svg": "./bin/font-to-svg.mjs"
+  },
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
     "start": "astro dev",
+    "font-to-svg": "node ./bin/font-to-svg.mjs",
+    "api": "node ./scripts/api-server.mjs",
+    "serve:api": "node ./scripts/api-server.mjs",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
