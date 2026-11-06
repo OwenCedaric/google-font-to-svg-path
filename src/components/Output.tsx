@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Copy, Download, Link, Box } from 'lucide-react';
 
 interface OutputProps {
   state: any;
@@ -11,12 +10,13 @@ export default function Output({ state }: OutputProps) {
   const [copyStatus, setCopyStatus] = useState('Copy SVG');
 
   const copyToClipboard = () => {
-    const textarea = document.getElementById('output-svg') as HTMLTextAreaElement;
-    if (textarea) {
-      textarea.select();
-      document.execCommand('copy');
-      setCopyStatus('Copied!');
-      setTimeout(() => setCopyStatus('Copy SVG'), 2000);
+    if (svgOutput) {
+      navigator.clipboard.writeText(svgOutput).then(() => {
+        setCopyStatus('Copied!');
+        setTimeout(() => setCopyStatus('Copy SVG'), 2000);
+      }).catch(err => {
+        console.error('Failed to copy: ', err);
+      });
     }
   };
 
@@ -107,20 +107,20 @@ export default function Output({ state }: OutputProps) {
 
       <div className="actions-container">
         <button className="btn btn-primary" onClick={copyToClipboard}>
-          <Copy size={16} />
-          {copyStatus}
+          <i className="ri-file-copy-line" />
+          <span>{copyStatus}</span>
         </button>
         <button className="btn btn-outline" onClick={downloadSvg}>
-          <Download size={16} />
-          SVG
+          <i className="ri-download-2-line" />
+          <span>SVG</span>
         </button>
         <button className="btn btn-outline" onClick={downloadDxf}>
-          <Box size={16} />
-          DXF
+          <i className="ri-box-3-line" />
+          <span>DXF</span>
         </button>
         <button id="create-link" className="btn btn-outline" onClick={createLink}>
-          <Link size={16} />
-          Share Link
+          <i className="ri-link" />
+          <span>Share Link</span>
         </button>
       </div>
     </div>

@@ -15,57 +15,53 @@
   box-sizing: border-box;
 }
 
-html, body {
+html {
+  scroll-behavior: smooth;
+}
+
+html.app-html,
+body.app-body {
   height: 100vh;
+  height: 100dvh;
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background-color: var(--bg-color);
 }
 
 body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background-color: var(--bg-color);
   font-family: var(--font-family);
   color: var(--text-color);
+}
+
+body.doc-body {
+  overflow-x: hidden;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
 }
 
-/* Hide External Elements */
+/* Hide External Elements if any */
 #ads-right, #tablet-bottom-ad, .ad-label {
   display: none !important;
 }
 
-/* Layout overrides for Layout.astro */
-header {
-  height: var(--header-height);
-  flex-shrink: 0;
-  border-bottom: 1px solid var(--border-color);
-  background: white;
-  display: flex;
-  align-items: center;
-}
-
+/* Tool Main Container */
 .container {
   display: flex;
-  flex: 1;
   width: 100% !important;
   max-width: none !important;
   margin: 0 !important;
   padding: 0 !important;
-  min-height: 0;
-}
-
-footer {
-  height: var(--footer-height);
+  height: calc(100vh - var(--header-height));
+  height: calc(100dvh - var(--header-height));
   flex-shrink: 0;
-  border-top: 1px solid var(--border-color);
-  background: white;
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.8rem;
-  color: var(--text-secondary);
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
 }
 
 /* App Container */
@@ -73,6 +69,7 @@ footer {
   display: flex;
   flex: 1;
   width: 100%;
+  height: 100%;
   position: relative;
   overflow: hidden;
   background: #fcfcfc;
@@ -101,17 +98,17 @@ footer {
 
 /* Sidebar / Drawer */
 .drawer {
-  position: relative; /* Fixed on desktop */
-  top: 0;
-  right: 0;
+  position: relative;
+  top: auto;
+  right: auto;
   width: var(--drawer-width);
   height: 100%;
   background: var(--bg-color);
   border-left: 1px solid var(--border-color);
-  z-index: 2000;
+  z-index: 10; /* Strictly below header (1000) so it never overlaps header on desktop */
   transition: var(--transition);
   overflow-y: auto;
-  padding: 2.5rem 2rem;
+  padding: 2rem 1.75rem;
   flex-shrink: 0;
 }
 
@@ -127,13 +124,14 @@ footer {
 .main-content {
   flex: 1;
   height: 100%;
-  padding: 3rem;
+  padding: 1.5rem 2rem;
   display: flex;
   flex-direction: column;
   align-items: center; /* Center horizontally for max-width container */
   overflow-y: auto;
   scrollbar-width: thin;
   min-width: 0;
+  z-index: 5;
 }
 
 .main-content-inner {
@@ -142,7 +140,7 @@ footer {
   height: 100%;
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 1rem;
   margin: 0;
 }
 
@@ -159,8 +157,10 @@ footer {
   display: flex;
   gap: 1.5rem;
   border-bottom: 2px solid #f0f0f0;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
+  margin-top: 0.25rem;
   width: 100%;
+  flex-shrink: 0;
 }
 
 .tab-btn {
@@ -195,21 +195,7 @@ footer {
   background: var(--accent-color);
 }
 
-/* Sidebar / Drawer */
-.drawer {
-  position: relative; /* Fixed on desktop */
-  top: 0;
-  right: 0;
-  width: var(--drawer-width);
-  height: 100%;
-  background: var(--bg-color);
-  border-left: 1px solid var(--border-color);
-  z-index: 2000;
-  transition: var(--transition);
-  overflow-y: auto;
-  padding: 2.5rem 2rem;
-  flex-shrink: 0;
-}
+
 
 /* Unified Button System */
 .btn {
@@ -440,15 +426,23 @@ details[open] summary::after {
     flex-direction: column;
   }
 
+  .drawer-overlay {
+    top: var(--header-height);
+    height: calc(100vh - var(--header-height));
+    z-index: 1100;
+  }
+
   .drawer {
     position: fixed;
+    top: var(--header-height);
+    height: calc(100vh - var(--header-height));
     right: calc(-1 * var(--drawer-width));
     left: auto;
     width: var(--drawer-width);
     box-shadow: -20px 0 60px rgba(0,0,0,0.1);
     border-left: 1px solid var(--border-color);
     border-right: none;
-    z-index: 2001;
+    z-index: 1200;
     padding: 2rem 1.5rem;
   }
 
@@ -536,5 +530,481 @@ details[open] summary::after {
 @media (min-width: 769px) {
   .menu-toggle {
     display: none;
+  }
+}
+
+/* ==========================================================================
+   Site Header & Brand Styles
+   ========================================================================== */
+.site-header {
+  height: var(--header-height);
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--border-color);
+  background: #ffffff;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+}
+
+.header-inner {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.5rem;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+  color: inherit;
+}
+
+.brand-icon {
+  width: 28px;
+  height: 28px;
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-name {
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #111827;
+  line-height: 1.1;
+}
+
+.brand-tagline {
+  font-size: 0.6875rem;
+  color: #6b7280;
+  letter-spacing: 0.02em;
+}
+
+.header-nav {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.nav-link {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: #4b5563;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: color 0.15s ease;
+}
+
+.nav-link:hover {
+  color: #111827;
+}
+
+.btn-tool-link {
+  font-weight: 600;
+  color: #2563eb !important;
+}
+
+.btn-tool-link:hover {
+  color: #1d4ed8 !important;
+}
+
+.github-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #111827;
+  text-decoration: none;
+  padding: 0.35rem 0.75rem;
+  background: #f3f4f6;
+  border-radius: 6px;
+  transition: background 0.15s ease;
+}
+
+.github-link:hover {
+  background: #e5e7eb;
+}
+
+/* ==========================================================================
+   About Page & Document Styles
+   ========================================================================== */
+.site-main {
+  flex: 1;
+}
+
+.about-page {
+  width: 100%;
+}
+
+.about-hero {
+  padding: 4.5rem 1.5rem 3.5rem;
+  background: linear-gradient(180deg, #f9fafb 0%, #ffffff 100%);
+  text-align: center;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.hero-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: #111827;
+  margin: 0.75rem 0 1rem;
+}
+
+.hero-subtitle {
+  font-size: 1.0625rem;
+  color: #4b5563;
+  max-width: 680px;
+  margin: 0 auto 2rem;
+  line-height: 1.6;
+}
+
+.hero-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+/* ==========================================================================
+   SEO & Content Sections
+   ========================================================================== */
+.seo-section {
+  padding: 5rem 1.5rem;
+  border-top: 1px solid var(--border-color);
+  background: #ffffff;
+}
+
+.seo-section.bg-alt {
+  background: #f9fafb;
+}
+
+.seo-container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.section-header {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto 3.5rem;
+}
+
+.badge {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #2563eb;
+  background: #eff6ff;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  margin-bottom: 0.75rem;
+  border: 1px solid #dbeafe;
+}
+
+.section-header h2 {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #111827;
+  letter-spacing: -0.03em;
+  margin: 0 0 1rem;
+  line-height: 1.25;
+}
+
+.section-header .subtitle {
+  font-size: 1.0625rem;
+  color: #4b5563;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Features Grid */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.75rem;
+}
+
+.feature-card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 1.75rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-2px);
+  border-color: #d1d5db;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+}
+
+.feature-icon {
+  font-size: 1.5rem;
+  color: #2563eb;
+  margin-bottom: 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background: #eff6ff;
+  border-radius: 10px;
+}
+
+.feature-card h3 {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #111827;
+  margin: 0 0 0.5rem;
+}
+
+.feature-card p {
+  font-size: 0.875rem;
+  color: #4b5563;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.feature-card code {
+  background: #f3f4f6;
+  padding: 0.15rem 0.35rem;
+  border-radius: 4px;
+  font-size: 0.8125rem;
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+/* Use Cases */
+.use-cases-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 4rem;
+}
+
+.use-case-box {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 1.5rem;
+}
+
+.use-case-box h4 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #111827;
+  margin: 0 0 0.5rem;
+}
+
+.use-case-box p {
+  font-size: 0.8125rem;
+  color: #4b5563;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Comparison Table */
+.comparison-wrapper {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+}
+
+.comparison-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #111827;
+  margin: 0 0 1.5rem;
+  text-align: center;
+}
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.comparison-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.875rem;
+}
+
+.comparison-table th,
+.comparison-table td {
+  padding: 0.875rem 1rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.comparison-table th {
+  background: #f9fafb;
+  font-weight: 700;
+  color: #111827;
+  font-size: 0.8125rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.comparison-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.comparison-table tbody tr:hover {
+  background: #fdfdfd;
+}
+
+/* FAQ Accordion */
+.faq-list {
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.faq-item {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: border-color 0.2s ease;
+}
+
+.faq-item[open] {
+  border-color: #93c5fd;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.05);
+}
+
+.faq-question {
+  padding: 1.125rem 1.25rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: #111827;
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  user-select: none;
+}
+
+.faq-question::-webkit-details-marker {
+  display: none;
+}
+
+.faq-question::after {
+  content: '+';
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: #6b7280;
+  transition: transform 0.2s ease;
+}
+
+.faq-item[open] .faq-question::after {
+  content: '−';
+  color: #2563eb;
+}
+
+.faq-answer {
+  padding: 0 1.25rem 1.25rem;
+  font-size: 0.875rem;
+  color: #4b5563;
+  line-height: 1.6;
+}
+
+.faq-answer p {
+  margin: 0;
+}
+
+/* Site Footer */
+.site-footer {
+  border-top: 1px solid var(--border-color);
+  background: #ffffff;
+  padding: 2.5rem 1.5rem;
+  font-size: 0.8125rem;
+  color: #6b7280;
+}
+
+.footer-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.footer-copy p {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.footer-copy a {
+  color: #111827;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.footer-copy a:hover {
+  text-decoration: underline;
+}
+
+.footer-copy .attribution {
+  font-size: 0.75rem;
+  color: #9ca3af;
+  margin-top: 0.25rem;
+}
+
+.footer-copy .attribution a {
+  color: #6b7280;
+  font-weight: 400;
+  text-decoration: underline;
+}
+
+.footer-links {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.footer-link {
+  color: #4b5563;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.footer-link:hover {
+  color: #111827;
+}
+
+@media (max-width: 960px) {
+  .header-nav .nav-link {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .section-header h2 {
+    font-size: 1.5rem;
+  }
+  
+  .seo-section {
+    padding: 3rem 1rem;
   }
 }

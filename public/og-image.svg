@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" fill="none">
+  <!-- Dark modern background with subtle grid -->
+  <rect width="1200" height="630" fill="#0B0F17"/>
+  <circle cx="1050" cy="120" r="350" fill="#1D4ED8" opacity="0.15" filter="blur(80px)"/>
+  <circle cx="150" cy="520" r="280" fill="#3B82F6" opacity="0.1" filter="blur(70px)"/>
+  
+  <!-- Brand Icon -->
+  <g transform="translate(100, 100)">
+    <rect width="72" height="72" rx="18" fill="#1E293B" stroke="#334155" stroke-width="2"/>
+    <path d="M22 52V18H48V25H30V31H45V38H30V52H22Z" fill="#FFFFFF"/>
+    <circle cx="50" cy="48" r="6" fill="#3B82F6"/>
+  </g>
+  
+  <!-- Brand Name -->
+  <text x="195" y="148" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="34" font-weight="700" fill="#FFFFFF" letter-spacing="-0.5">FontSVG</text>
+  <text x="350" y="148" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="20" font-weight="500" fill="#64748B">fontsvg.ceda.is</text>
+
+  <!-- Main Headline -->
+  <text x="100" y="270" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="64" font-weight="800" fill="#F8FAFC" letter-spacing="-1.5">
+    Google Font &amp; Custom Font
+  </text>
+  <text x="100" y="345" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="64" font-weight="800" fill="#38BDF8" letter-spacing="-1.5">
+    to Clean SVG Path &amp; CAD DXF
+  </text>
+
+  <!-- Tagline / Features -->
+  <text x="100" y="420" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="24" font-weight="400" fill="#94A3B8">
+    Free online vectorizer with TTF/OTF upload, multi-line kerning, boolean union,
+  </text>
+  <text x="100" y="458" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="24" font-weight="400" fill="#94A3B8">
+    and 100% private, client-side OpenType &amp; Maker.js processing.
+  </text>
+
+  <!-- Badges at bottom -->
+  <g transform="translate(100, 520)">
+    <!-- Badge 1 -->
+    <rect width="180" height="42" rx="8" fill="#1E293B" stroke="#334155"/>
+    <text x="90" y="27" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="16" font-weight="600" fill="#E2E8F0" text-anchor="middle">100% Client-Side</text>
+    
+    <!-- Badge 2 -->
+    <g transform="translate(200, 0)">
+      <rect width="170" height="42" rx="8" fill="#1E293B" stroke="#334155"/>
+      <text x="85" y="27" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="16" font-weight="600" fill="#E2E8F0" text-anchor="middle">Custom Fonts</text>
+    </g>
+
+    <!-- Badge 3 -->
+    <g transform="translate(390, 0)">
+      <rect width="160" height="42" rx="8" fill="#1E293B" stroke="#334155"/>
+      <text x="80" y="27" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="16" font-weight="600" fill="#E2E8F0" text-anchor="middle">DXF &amp; SVG</text>
+    </g>
+
+    <!-- Badge 4 -->
+    <g transform="translate(570, 0)">
+      <rect width="150" height="42" rx="8" fill="#1E293B" stroke="#334155"/>
+      <text x="75" y="27" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="16" font-weight="600" fill="#E2E8F0" text-anchor="middle">MIT License</text>
+    </g>
+  </g>
+</svg>

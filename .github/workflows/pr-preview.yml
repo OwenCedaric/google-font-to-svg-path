@@ -19,7 +19,7 @@ jobs:
         if: github.event.action != 'closed'
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
           cache: 'npm'
 
       - name: Install dependencies
@@ -36,8 +36,8 @@ jobs:
           // https://astro.build/config
           export default defineConfig({
             integrations: [react()],
-            site: 'https://danmarshall.github.io',
-            base: '/google-font-to-svg-path/pr-preview/pr-${{ github.event.pull_request.number }}',
+            site: 'https://fontsvg.ceda.is',
+            base: '/pr-preview/pr-${{ github.event.pull_request.number }}',
           });
           EOF
 

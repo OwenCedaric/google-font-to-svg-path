@@ -1,0 +1,226 @@
+---
+import { siteConfig } from '../config/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+  keywords?: string;
+  ogImage?: string;
+  isApp?: boolean;
+}
+
+const {
+  title = siteConfig.title,
+  description = siteConfig.description,
+  keywords = siteConfig.keywords,
+  ogImage = new URL(siteConfig.ogImage, siteConfig.url).href,
+  isApp = false,
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, siteConfig.url).href;
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "@id": `${siteConfig.url}/#webapp`,
+      "name": `${siteConfig.name} - ${siteConfig.tagline}`,
+      "url": `${siteConfig.url}/`,
+      "description": description,
+      "applicationCategory": "DesignApplication",
+      "operatingSystem": "All modern browsers",
+      "browserRequirements": "Requires JavaScript. Requires HTML5 Canvas & WebAssembly support.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "featureList": [
+        "Google Fonts to SVG path conversion",
+        "Custom TTF, OTF, and WOFF font upload",
+        "Multi-line text formatting & line height control",
+        "Boolean union path merging for overlapping cursive letters",
+        "DXF export for CAD, CNC, and laser cutting",
+        "100% client-side privacy-first processing"
+      ],
+      "author": {
+        "@type": "Person",
+        "name": siteConfig.author.name,
+        "url": siteConfig.author.url
+      },
+      "creator": {
+        "@type": "Person",
+        "name": siteConfig.author.name,
+        "url": siteConfig.author.url
+      },
+      "isBasedOn": siteConfig.links.upstream
+    },
+    {
+      "@type": "FAQPage",
+      "@id": `${siteConfig.url}/about#faq`,
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How do I convert Google Fonts to an SVG path?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Select any Google Font from the dropdown list, type your text, customize size and kerning, and the tool will instantly render clean vector SVG paths (<path d='...'>) which you can copy to your clipboard or download as an SVG file."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I use custom font files not available on Google Fonts?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes! You can upload your own font files (.ttf, .otf, or .woff) via the Font settings panel. All font parsing is executed directly in your browser using OpenType.js without uploading files to any remote server."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does path union work for script/cursive fonts?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "When the 'Union' option is enabled, the tool performs a boolean union operation on overlapping glyph boundaries using Maker.js. This removes internal overlapping outlines, resulting in a single continuous cut-ready outline ideal for vinyl cutters, laser cutters, and CNC machines."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is this tool safe and private?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Absolutely. 100% of the computation happens locally in your browser client using OpenType.js and Maker.js. Neither your custom font files nor your input text are ever transmitted to any external server."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What formats can I export?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "You can export pure SVG path data (copied directly to clipboard), full standalone .svg vector files, and Autodesk .dxf CAD files formatted for CNC routers and laser engraving software."
+          }
+        }
+      ]
+    }
+  ]
+};
+---
+
+<!DOCTYPE html>
+<html lang="en" class={isApp ? "app-html" : ""}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    
+    <!-- Primary SEO Meta Tags -->
+    <title>{title}</title>
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
+    <meta name="keywords" content={keywords} />
+    <meta name="author" content="Cedar" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <link rel="canonical" href={canonicalURL} />
+    <meta name="theme-color" content="#ffffff" />
+    
+    <!-- Favicon & Touch Icons -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml" />
+    <link rel="alternate" type="text/plain" href="/llms.txt" title="LLMs.txt" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:site_name" content="FontSVG" />
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={canonicalURL} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    
+    <!-- Schema.org Structured Data (JSON-LD) -->
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    
+    <!-- Custom Head Slot -->
+    <slot name="head" />
+  </head>
+  <body class={isApp ? "app-body" : "doc-body"}>
+    <header class="site-header">
+      <div class="header-inner">
+        <a href={siteConfig.base} class="brand" aria-label={`${siteConfig.name} Home`}>
+          <svg class="brand-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="32" height="32" rx="8" fill="#111827" />
+            <path d="M9 24V8H22V11.5H13V14.5H20.5V18H13V24H9Z" fill="#FFFFFF" />
+            <circle cx="23" cy="22" r="3" fill="#3B82F6" />
+          </svg>
+          <div class="brand-text">
+            <span class="brand-name">{siteConfig.name}</span>
+            <span class="brand-tagline">{siteConfig.tagline}</span>
+          </div>
+        </a>
+
+        <nav class="header-nav">
+          {isApp ? (
+            <a href="/about" class="nav-link">
+              <i class="ri-information-line"></i>
+              <span>About &amp; Guide</span>
+            </a>
+          ) : (
+            <>
+              <a href="/" class="nav-link btn-tool-link">
+                <i class="ri-arrow-left-line"></i>
+                <span>Back to App</span>
+              </a>
+              <a href="/about#features" class="nav-link">Features</a>
+              <a href="/about#use-cases" class="nav-link">Use Cases</a>
+              <a href="/about#faq" class="nav-link">FAQ</a>
+            </>
+          )}
+          <a 
+            href={siteConfig.links.github} 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            class="github-link"
+            aria-label="GitHub Repository"
+          >
+            <i class="ri-github-fill"></i>
+            <span>GitHub</span>
+          </a>
+        </nav>
+      </div>
+    </header>
+
+    {isApp ? (
+      <div class="container">
+        <slot name="content" />
+        <slot />
+      </div>
+    ) : (
+      <main class="site-main">
+        <slot />
+      </main>
+      <footer class="site-footer">
+        <div class="footer-inner">
+          <div class="footer-copy">
+            <p>&copy; {new Date().getFullYear()} <a href={siteConfig.url}>{siteConfig.name}</a> by <a href={siteConfig.author.url} target="_blank" rel="noopener noreferrer">{siteConfig.author.name}</a>. Open source under the MIT License.</p>
+            <p class="attribution">Based on the original open-source project by <a href={siteConfig.links.upstream} target="_blank" rel="noopener noreferrer">Dan Marshall</a>.</p>
+          </div>
+          <div class="footer-links">
+            <a href="/sitemap.xml" target="_blank" rel="noopener noreferrer" class="footer-link"><i class="ri-node-tree"></i> Sitemap</a>
+            <a href={siteConfig.links.github} target="_blank" rel="noopener noreferrer" class="footer-link"><i class="ri-github-fill"></i> GitHub</a>
+            <a href={siteConfig.links.googleFonts} target="_blank" rel="noopener noreferrer" class="footer-link"><i class="ri-google-fill"></i> Google Fonts</a>
+          </div>
+        </div>
+      </footer>
+    )}
+  </body>
+</html>

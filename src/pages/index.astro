@@ -1,11 +1,12 @@
 ---
-import Layout from '@danmarshall/tool-style/Layout.astro';
+import Layout from '../layouts/Layout.astro';
 import App from '../components/App.tsx';
+import 'remixicon/fonts/remixicon.css';
 import '../styles/index.css';
 ---
 
-<Layout title="Google Font to SVG Path">
-  <script is:inline src="https://cdn.jsdelivr.net/npm/bezier-js@2/bezier.js" slot="head"></script>
+<Layout isApp={true}>
+  <script is:inline src="/bezier.js" slot="head"></script>
   
   <App client:idle slot="content" />
 </Layout>

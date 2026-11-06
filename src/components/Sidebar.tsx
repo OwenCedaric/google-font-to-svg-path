@@ -2,7 +2,6 @@ import React, { useMemo } from 'react';
 // @ts-ignore
 import makerjs from 'makerjs';
 import * as opentype from 'opentype.js';
-import { ExternalLink, Upload } from 'lucide-react';
 
 interface SidebarProps {
   state: any;
@@ -76,7 +75,8 @@ export default function Sidebar({ state, setState }: SidebarProps) {
               rel="noopener noreferrer"
               className="link-btn"
             >
-              Browse <ExternalLink size={12} />
+              <span>Browse</span>
+              <i className="ri-external-link-line" style={{ fontSize: '11px' }} />
             </a>
           </div>
           <select
@@ -105,7 +105,7 @@ export default function Sidebar({ state, setState }: SidebarProps) {
           <label>Upload custom font</label>
           <div className="file-input-wrapper">
             <div className="file-input-custom">
-              <Upload size={14} style={{ marginRight: '8px' }} />
+              <i className="ri-upload-2-line" style={{ marginRight: '8px', fontSize: '14px' }} />
               {customFont ? 'Custom font loaded' : 'Choose .ttf / .otf file'}
             </div>
             <input

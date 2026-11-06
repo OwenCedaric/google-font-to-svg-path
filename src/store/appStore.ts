@@ -29,7 +29,7 @@ export const defaultState: AppState = {
   customFont: undefined,
   fontFamily: 'ABeeZee',
   fontVariant: 'regular',
-  text: 'Verb',
+  text: 'Cedaric',
   size: 100,
   lineHeight: 1.2,
   union: false,

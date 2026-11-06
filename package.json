@@ -1,7 +1,7 @@
 {
   "name": "google-font-to-svg-path",
-  "version": "1.0.0",
-  "description": "Create an SVG path from a Google font",
+  "version": "1.1.0",
+  "description": "Convert Google Fonts and custom fonts to clean SVG paths and CAD DXF outlines",
   "main": "index.js",
   "scripts": {
     "dev": "astro dev",
@@ -12,29 +12,35 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/danmarshall/google-font-to-svg-path.git"
+    "url": "git+https://github.com/OwenCedaric/google-font-to-svg-path.git"
   },
   "keywords": [
-    "google",
-    "fonts",
-    "svg"
+    "google-fonts",
+    "svg",
+    "svg-path",
+    "vector",
+    "font-to-svg",
+    "opentype",
+    "dxf",
+    "makerjs",
+    "typography"
   ],
-  "author": "Dan Marshall",
+  "author": "Cedar",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/danmarshall/google-font-to-svg-path/issues"
+    "url": "https://github.com/OwenCedaric/google-font-to-svg-path/issues"
   },
-  "homepage": "https://github.com/danmarshall/google-font-to-svg-path#readme",
+  "homepage": "https://fontsvg.ceda.is",
   "dependencies": {
     "@astrojs/react": "^4.4.2",
-    "@danmarshall/tool-style": "github:danmarshall/tool-style#main",
     "@types/google.fonts": "^1.0.1",
     "astro": "^5.16.11",
     "lucide-react": "^0.562.0",
     "makerjs": "^0.19.2",
     "opentype.js": "^0.7.3",
     "react": "^19.2.3",
-    "react-dom": "^19.2.3"
+    "react-dom": "^19.2.3",
+    "remixicon": "^4.9.1"
   },
   "devDependencies": {
     "http-server": "^14.1.1",

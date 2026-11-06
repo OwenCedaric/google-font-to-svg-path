@@ -3,7 +3,6 @@ import Sidebar from './Sidebar';
 import Output from './Output';
 import { loadGoogleFonts, renderSvg } from '../lib/fontUtils';
 import { defaultState } from '../store/appStore';
-import { ChevronRight, ChevronLeft } from 'lucide-react';
 
 export default function App() {
   const [state, setState] = useState(defaultState);
@@ -65,7 +64,7 @@ export default function App() {
         onClick={toggleDrawer}
         aria-label={isDrawerOpen ? "Close settings" : "Open settings"}
       >
-        {isDrawerOpen ? <ChevronRight size={24} /> : <ChevronLeft size={24} />}
+        <i className={isDrawerOpen ? "ri-arrow-right-s-line" : "ri-arrow-left-s-line"} style={{ fontSize: '22px' }} />
       </button>
     </div>
   );

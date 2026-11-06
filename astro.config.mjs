@@ -1,13 +1,15 @@
 import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
+import { siteConfig } from './src/config/site';
 
+// https://astro.build/config
 export default defineConfig({
   integrations: [react()],
-  site: 'https://danmarshall.github.io',
-  base: '/google-font-to-svg-path',
+  site: siteConfig.url,
+  base: siteConfig.base,
   vite: {
     build: {
-      minify: false
+      minify: true
     }
   }
 });

@@ -1,0 +1,202 @@
+---
+import Layout from '../layouts/Layout.astro';
+import 'remixicon/fonts/remixicon.css';
+import '../styles/index.css';
+---
+
+<Layout
+  title="About & Guide | FontSVG"
+  description="Explore FontSVG features: convert 1,500+ Google Fonts and custom local TTF/OTF fonts into clean vector SVG paths and CAD DXF drawings with client-side privacy."
+  isApp={false}
+>
+  <div class="about-page">
+    <!-- Hero Section -->
+    <header class="about-hero">
+      <div class="seo-container">
+        <span class="badge"><i class="ri-sparkling-fill"></i> Documentation &amp; Overview</span>
+        <h1 class="hero-title">About FontSVG</h1>
+        <p class="hero-subtitle">
+          FontSVG is an open-source, client-side vector typography converter. It transforms Google Fonts and custom desktop font files (.ttf, .otf, .woff) into continuous SVG path outlines and CAD DXF drawings with zero server roundtrips.
+        </p>
+        <div class="hero-actions">
+          <a href="/" class="btn btn-primary">
+            <i class="ri-magic-line"></i>
+            <span>Launch Web Tool</span>
+          </a>
+          <a href="#features" class="btn btn-outline">
+            <i class="ri-list-check"></i>
+            <span>Explore Features</span>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Features Section -->
+    <section class="seo-section" id="features">
+      <div class="seo-container">
+        <div class="section-header">
+          <span class="badge">Comprehensive Capabilities</span>
+          <h2>Professional Vector Font Outlines at Your Fingertips</h2>
+          <p class="subtitle">Convert any typography into clean, continuous SVG paths and CAD DXF drawings with complete precision and privacy.</p>
+        </div>
+
+        <div class="features-grid">
+          <article class="feature-card">
+            <div class="feature-icon"><i class="ri-google-fill"></i></div>
+            <h3>1,500+ Google Fonts</h3>
+            <p>Direct integration with Google Fonts API. Instantly search and render typography from popular sans-serif, serif, display, and handwriting families.</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon"><i class="ri-folder-upload-line"></i></div>
+            <h3>Local Custom Font Upload</h3>
+            <p>Upload your own <code>.ttf</code>, <code>.otf</code>, or <code>.woff</code> font files. All glyphs are parsed directly in your browser using OpenType.js without server uploads.</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon"><i class="ri-shape-line"></i></div>
+            <h3>Boolean Union Merging</h3>
+            <p>Automatically merge overlapping letter outlines using Maker.js. Eliminates inner intersections in cursive scripts for seamless vinyl cutting and CNC routing.</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon"><i class="ri-compasses-2-line"></i></div>
+            <h3>Bezier Curve Accuracy</h3>
+            <p>Fine-tune approximation tolerances for quadratic and cubic bezier curves, producing optimized SVG path commands with reduced node count.</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon"><i class="ri-text-wrap"></i></div>
+            <h3>Multi-Line Formatting</h3>
+            <p>Supports multi-line text input with custom line height multipliers, automatic empty line skipping, and precise kerning adjustments.</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon"><i class="ri-shield-check-line"></i></div>
+            <h3>100% Client-Side Privacy</h3>
+            <p>Zero telemetry, zero server-side rendering. Your confidential fonts, proprietary logos, and sensitive text never leave your local device.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Use Cases Section -->
+    <section class="seo-section bg-alt" id="use-cases">
+      <div class="seo-container">
+        <div class="section-header">
+          <span class="badge">Industry Applications</span>
+          <h2>Engineered for Designers, Makers, and Engineers</h2>
+          <p class="subtitle">From digital UI graphics to physical fabrication, clean vector outlines unlock endless possibilities.</p>
+        </div>
+
+        <div class="use-cases-grid">
+          <div class="use-case-box">
+            <h4>Laser Cutting &amp; Engraving</h4>
+            <p>Export DXF and SVG geometry with merged strokes, ready for LightBurn, Glowforge, Cricut Design Space, and CAM laser software.</p>
+          </div>
+          <div class="use-case-box">
+            <h4>CNC Routing &amp; Machining</h4>
+            <p>Generate closed vector loops with accurate dimensional units (mm, cm, inches) for toolpath generation in Fusion 360, Vectric, and Carbide Create.</p>
+          </div>
+          <div class="use-case-box">
+            <h4>Web &amp; UI Animation</h4>
+            <p>Extract pure <code>&lt;path d="..."&gt;</code> coordinates to animate text stroke-dasharray in CSS, GSAP, or Framer Motion without bulky webfont files.</p>
+          </div>
+          <div class="use-case-box">
+            <h4>3D Printing &amp; CAD Modeling</h4>
+            <p>Import clean DXF/SVG profiles into Blender, SolidWorks, or FreeCAD to perform clean 3D extrusions without self-intersecting polygon errors.</p>
+          </div>
+        </div>
+
+        <div class="comparison-wrapper">
+          <h3 class="comparison-title">Comparison: FontSVG vs Traditional Methods</h3>
+          <div class="table-responsive">
+            <table class="comparison-table">
+              <thead>
+                <tr>
+                  <th>Feature</th>
+                  <th>FontSVG</th>
+                  <th>Adobe Illustrator</th>
+                  <th>Generic Online Converters</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Cost &amp; Registration</td>
+                  <td><strong>100% Free, No Sign-up</strong></td>
+                  <td>Paid Subscription</td>
+                  <td>Freemium / Paywall</td>
+                </tr>
+                <tr>
+                  <td>Privacy &amp; Security</td>
+                  <td><strong>100% Local Browser Execution</strong></td>
+                  <td>Local Desktop</td>
+                  <td>Server Uploads (Risk of Font Leaks)</td>
+                </tr>
+                <tr>
+                  <td>Direct SVG Path Copy</td>
+                  <td><strong>Instant One-Click Copy</strong></td>
+                  <td>Multi-step Export</td>
+                  <td>Download Only</td>
+                </tr>
+                <tr>
+                  <td>CAD DXF Export</td>
+                  <td><strong>Built-in with Unit Control</strong></td>
+                  <td>Export Required</td>
+                  <td>Rarely Supported</td>
+                </tr>
+                <tr>
+                  <td>Custom Font Upload</td>
+                  <td><strong>Supported (.ttf/.otf/.woff)</strong></td>
+                  <td>Supported (System Install)</td>
+                  <td>Limited</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="seo-section" id="faq">
+      <div class="seo-container">
+        <div class="section-header">
+          <span class="badge">Frequently Asked Questions</span>
+          <h2>Everything You Need to Know</h2>
+          <p class="subtitle">Quick answers to common questions about SVG path extraction, CAD export, and font privacy.</p>
+        </div>
+
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary class="faq-question">Why convert fonts into SVG paths?</summary>
+            <div class="faq-answer">
+              <p>Converting fonts to SVG paths turns text characters into raw vector coordinates. This guarantees that your typography renders identically across every operating system and browser without requiring visitors to download font files. It also allows direct boolean manipulation in vector tools and CNC machines.</p>
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary class="faq-question">What does the "Union" parameter do?</summary>
+            <div class="faq-answer">
+              <p>When you enable "Union", overlapping character paths are merged into a single continuous polygon. In cursive or script fonts, adjacent letters normally overlap; without Union, laser cutters would cut through the overlapping intersections. Union eliminates internal cutlines.</p>
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary class="faq-question">Can I use this tool for commercial projects?</summary>
+            <div class="faq-answer">
+              <p>Yes. FontSVG is open source under the MIT License and completely free for personal and commercial projects. Please ensure your chosen font license (e.g., SIL Open Font License for Google Fonts) permits your intended commercial application.</p>
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary class="faq-question">Does FontSVG store or send my text to any server?</summary>
+            <div class="faq-answer">
+              <p>No. All text parsing, font loading, Maker.js CAD calculations, and SVG generation happen exclusively within your client's browser engine. We do not store, log, or transmit any user text or uploaded font files.</p>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+  </div>
+</Layout>
