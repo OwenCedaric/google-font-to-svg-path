@@ -6,7 +6,7 @@
 
 > Convert Google Fonts and custom fonts (TTF, OTF, WOFF) into clean SVG vector paths and CAD DXF outlines directly in your browser. 100% private, client-side processing with zero server dependencies.
 
-**Live Tool**: [https://fontsvg.ceda.is/](https://fontsvg.ceda.is/)
+**Live Tool**: [https://fontsvg.ceda.is/](https://fontsvg.ceda.is/) | **中文版**: [https://fontsvg.ceda.is/zh/](https://fontsvg.ceda.is/zh/)
 
 ---
 

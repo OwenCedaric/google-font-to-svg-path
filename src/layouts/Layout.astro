@@ -1,7 +1,9 @@
 ---
 import { siteConfig } from '../config/site';
+import { getI18n, type Lang } from '../i18n/translations';
 
 interface Props {
+  lang?: Lang;
   title?: string;
   description?: string;
   keywords?: string;
@@ -10,104 +12,274 @@ interface Props {
 }
 
 const {
-  title = siteConfig.title,
-  description = siteConfig.description,
-  keywords = siteConfig.keywords,
-  ogImage = new URL(siteConfig.ogImage, siteConfig.url).href,
+  lang = 'en',
   isApp = false,
+  ogImage = new URL(siteConfig.ogImage, siteConfig.url).href,
 } = Astro.props;
 
-const canonicalURL = new URL(Astro.url.pathname, siteConfig.url).href;
+const i18n = getI18n(lang);
 
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "WebApplication",
-      "@id": `${siteConfig.url}/#webapp`,
-      "name": `${siteConfig.name} - ${siteConfig.tagline}`,
-      "url": `${siteConfig.url}/`,
-      "description": description,
-      "applicationCategory": "DesignApplication",
-      "operatingSystem": "All modern browsers",
-      "browserRequirements": "Requires JavaScript. Requires HTML5 Canvas & WebAssembly support.",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD"
-      },
-      "featureList": [
-        "Google Fonts to SVG path conversion",
-        "Custom TTF, OTF, and WOFF font upload",
-        "Multi-line text formatting & line height control",
-        "Boolean union path merging for overlapping cursive letters",
-        "DXF export for CAD, CNC, and laser cutting",
-        "100% client-side privacy-first processing"
-      ],
-      "author": {
-        "@type": "Person",
-        "name": siteConfig.author.name,
-        "url": siteConfig.author.url
-      },
-      "creator": {
-        "@type": "Person",
-        "name": siteConfig.author.name,
-        "url": siteConfig.author.url
-      },
-      "isBasedOn": siteConfig.links.upstream
-    },
-    {
-      "@type": "FAQPage",
-      "@id": `${siteConfig.url}/about#faq`,
-      "mainEntity": [
+const title = Astro.props.title || i18n.site.title;
+const description = Astro.props.description || i18n.site.description;
+const keywords = Astro.props.keywords || i18n.site.keywords;
+
+const currentPath = Astro.url.pathname;
+const isZh = lang === 'zh';
+
+let enPath = isZh ? currentPath.replace(/^\/zh(\/|$)/, '$1') || '/' : currentPath;
+if (!enPath.startsWith('/')) enPath = '/' + enPath;
+if (enPath !== '/' && !enPath.endsWith('/')) enPath = enPath + '/';
+
+let zhPath = isZh 
+  ? currentPath 
+  : ('/zh' + (currentPath === '/' ? '/' : (currentPath.endsWith('/') ? currentPath : currentPath + '/')));
+
+const canonicalURL = new URL(currentPath, siteConfig.url).href;
+const enCanonicalURL = new URL(enPath, siteConfig.url).href;
+const zhCanonicalURL = new URL(zhPath, siteConfig.url).href;
+
+const homeLink = isZh ? '/zh/' : '/';
+const aboutLink = isZh ? '/zh/about/' : '/about/';
+
+const jsonLd = isZh
+  ? {
+      "@context": "https://schema.org",
+      "@graph": [
         {
-          "@type": "Question",
-          "name": "How do I convert Google Fonts to an SVG path?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Select any Google Font from the dropdown list, type your text, customize size and kerning, and the tool will instantly render clean vector SVG paths (<path d='...'>) which you can copy to your clipboard or download as an SVG file."
-          }
+          "@type": "WebApplication",
+          "@id": `${siteConfig.url}/zh/#webapp`,
+          "name": `${siteConfig.name} - ${i18n.site.tagline}`,
+          "url": `${siteConfig.url}/zh/`,
+          "description": description,
+          "inLanguage": "zh-CN",
+          "applicationCategory": "DesignApplication",
+          "operatingSystem": "All modern browsers",
+          "browserRequirements": "Requires JavaScript. Requires HTML5 Canvas & WebAssembly support.",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          },
+          "featureList": [
+            "Google 字体在线转 SVG 路径 (1,500+ 款字体)",
+            "本地字体文件上传解析 (支持 TTF、OTF、WOFF、WOFF2)",
+            "100% 浏览器客户端离线解析 (零服务端上传，严格保护商业字体版权)",
+            "多行文本排版与行高微调",
+            "连笔草书重叠轮廓布尔合并 (Union / 联集)",
+            "CAD DXF 格式导出（支持毫米、厘米、英寸单位，适配激光切割与 CNC 雕刻）",
+            "一键复制纯净矢量 SVG <path d='...'> 代码"
+          ],
+          "author": {
+            "@type": "Person",
+            "name": siteConfig.author.name,
+            "url": siteConfig.author.url
+          },
+          "creator": {
+            "@type": "Person",
+            "name": siteConfig.author.name,
+            "url": siteConfig.author.url
+          },
+          "isBasedOn": siteConfig.links.upstream
         },
         {
-          "@type": "Question",
-          "name": "Can I use custom font files not available on Google Fonts?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yes! You can upload your own font files (.ttf, .otf, or .woff) via the Font settings panel. All font parsing is executed directly in your browser using OpenType.js without uploading files to any remote server."
-          }
+          "@type": "HowTo",
+          "@id": `${siteConfig.url}/zh/#howto`,
+          "name": "如何将 Google 字体或本地上传字体转换为 SVG 矢量路径与 CAD DXF",
+          "description": "通过 FontSVG 在线将 Google 字体或本地电脑字体文件（TTF/OTF/WOFF）快速提取为平滑矢量路径与 CAD 图纸的图文指南。",
+          "inLanguage": "zh-CN",
+          "step": [
+            {
+              "@type": "HowToStep",
+              "name": "选择 Google 字体或上传本地字体文件",
+              "text": "在字体下拉列表中搜索选择 1,500+ 款 Google 在线字体，或点击“选择 .ttf / .otf / .woff 文件”载入本地字体文件，纯浏览器离线计算，100% 保护隐私。"
+            },
+            {
+              "@type": "HowToStep",
+              "name": "输入文字并调整排版参数",
+              "text": "输入待转换的文字，调节字号、字距微调（Kerning），以及多行文字的行高比例。"
+            },
+            {
+              "@type": "HowToStep",
+              "name": "开启重叠路径合并 Union（针对连笔字/草书）",
+              "text": "如文字笔画互相交叉重叠，勾选“合并重叠路径 (Union)”，自动通过布尔合并消除内部交叉线，生成单一平滑切割闭合轮廓。"
+            },
+            {
+              "@type": "HowToStep",
+              "name": "复制 SVG 路径或导出 DXF 文件",
+              "text": "点击“复制 SVG 路径”直接将 <path d='...'> 存入剪贴板，或点击“下载 SVG”与“导出 CAD DXF”导入 LightBurn、LaserCAD 等激光加工软件。"
+            }
+          ]
         },
         {
-          "@type": "Question",
-          "name": "How does path union work for script/cursive fonts?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "When the 'Union' option is enabled, the tool performs a boolean union operation on overlapping glyph boundaries using Maker.js. This removes internal overlapping outlines, resulting in a single continuous cut-ready outline ideal for vinyl cutters, laser cutters, and CNC machines."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Is this tool safe and private?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Absolutely. 100% of the computation happens locally in your browser client using OpenType.js and Maker.js. Neither your custom font files nor your input text are ever transmitted to any external server."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "What formats can I export?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "You can export pure SVG path data (copied directly to clipboard), full standalone .svg vector files, and Autodesk .dxf CAD files formatted for CNC routers and laser engraving software."
-          }
+          "@type": "FAQPage",
+          "@id": `${siteConfig.url}/zh/about/#faq`,
+          "inLanguage": "zh-CN",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "如何在线将字体转换为 SVG 路径？",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "在字体列表中选择 Google 字体或直接上传电脑里的 TTF/OTF 文件，输入文字后工具会即时生成干净的矢量轮廓，可一键复制 <path d='...'> 路径或下载完整 SVG。"
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "是否支持上传电脑里的中文字体（TTF/OTF）？",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "完全支持！在字体面板中点击上传 .ttf / .otf / .woff 文件即可。由于中文字体文件普遍较大（通常 10MB~30MB），FontSVG 采用纯前端解析，几毫秒内直接在本地读取字形轮廓，无需上传服务器等待。"
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "上传自定义字体和输入的文本是否安全保密？",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "100% 安全。FontSVG 的所有文字解析、轮廓提取与布尔合并均通过 OpenType.js 与 Maker.js 在浏览器本地计算完成，不向任何第三方或云端服务器发送任何文件与数据。"
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "“合并重叠路径 (Union)”有什么作用？",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "在草书、手写体或紧凑排版中，相邻字母笔画通常会重叠。如果不合并，激光雕刻机或刻字机会在交叉处重复下刀切断材料。开启 Union 后会自动将所有重叠笔画融合成一条光滑的闭合外轮廓。"
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "支持导出哪些文件格式？",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "支持一键复制纯净 SVG 路径（<path d='...'>）、下载标准 .svg 矢量文件、以及导出 Autodesk .dxf 格式（支持选择毫米、厘米、英寸等物理尺寸单位）。"
+              }
+            }
+          ]
         }
       ]
     }
-  ]
-};
+  : {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebApplication",
+          "@id": `${siteConfig.url}/#webapp`,
+          "name": `${siteConfig.name} - ${siteConfig.tagline}`,
+          "url": `${siteConfig.url}/`,
+          "description": description,
+          "inLanguage": "en",
+          "applicationCategory": "DesignApplication",
+          "operatingSystem": "All modern browsers",
+          "browserRequirements": "Requires JavaScript. Requires HTML5 Canvas & WebAssembly support.",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          },
+          "featureList": [
+            "Google Fonts to SVG path conversion (1,500+ fonts)",
+            "Custom desktop font file upload (TTF, OTF, WOFF, WOFF2)",
+            "100% client-side privacy-first processing (zero server uploads)",
+            "Multi-line text formatting & line height control",
+            "Boolean union path merging for overlapping cursive letters",
+            "DXF export with custom units (mm, cm, inch) for CAD, CNC, and laser cutting",
+            "Instant one-click raw SVG <path d='...'> clipboard copying"
+          ],
+          "author": {
+            "@type": "Person",
+            "name": siteConfig.author.name,
+            "url": siteConfig.author.url
+          },
+          "creator": {
+            "@type": "Person",
+            "name": siteConfig.author.name,
+            "url": siteConfig.author.url
+          },
+          "isBasedOn": siteConfig.links.upstream
+        },
+        {
+          "@type": "HowTo",
+          "@id": `${siteConfig.url}/#howto`,
+          "name": "How to Convert Google Fonts or Custom Fonts (TTF/OTF/WOFF) to SVG Paths & CAD DXF",
+          "description": "Step-by-step tutorial to convert any Google Font or user-uploaded local font file into clean, scalable SVG paths (<path d='...'>) and CAD DXF drawings.",
+          "inLanguage": "en",
+          "step": [
+            {
+              "@type": "HowToStep",
+              "name": "Select a Google Font or Upload a Custom Font File",
+              "text": "Browse over 1,500 Google Fonts in the dropdown, or click 'Choose .ttf / .otf file' to load your own local desktop font (.ttf, .otf, .woff, .woff2) completely privately."
+            },
+            {
+              "@type": "HowToStep",
+              "name": "Enter Text & Adjust Typography",
+              "text": "Type your text, adjust the font size, set the kerning spacing, and configure multi-line line height as needed."
+            },
+            {
+              "@type": "HowToStep",
+              "name": "Enable Boolean Union for Cursive Outlines (Optional)",
+              "text": "For cursive or script fonts with overlapping letters, toggle the 'Union' checkbox. This welds overlapping glyph outlines into a single continuous cutting outline."
+            },
+            {
+              "@type": "HowToStep",
+              "name": "Copy Raw SVG Path or Download Files",
+              "text": "Click 'Copy SVG' to grab the raw <path d='...'> string directly into your clipboard, or click 'Download SVG' / 'Download DXF' for laser cutters and CNC machines."
+            }
+          ]
+        },
+        {
+          "@type": "FAQPage",
+          "@id": `${siteConfig.url}/about#faq`,
+          "inLanguage": "en",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "How do I convert Google Fonts to an SVG path?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Select any Google Font from the dropdown list, type your text, customize size and kerning, and the tool will instantly render clean vector SVG paths (<path d='...'>) which you can copy to your clipboard or download as an SVG file."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Can I upload and convert my own custom font files (TTF, OTF, WOFF)?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes! You can upload your own font files (.ttf, .otf, .woff, or .woff2) via the Font settings panel. All font parsing and vectorization is executed directly in your browser using OpenType.js without uploading files to any remote server."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Are uploaded custom fonts private and secure?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, 100%. The application operates completely client-side. Your uploaded proprietary or commercial font files and your text are never sent over the network or saved on any server."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How does path union work for script/cursive fonts?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "When the 'Union' option is enabled, the tool performs a boolean union operation on overlapping glyph boundaries using Maker.js. This removes internal overlapping outlines, resulting in a single continuous cut-ready outline ideal for vinyl cutters, laser cutters, and CNC machines."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What formats can I export?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "You can export pure SVG path data (copied directly to clipboard), full standalone .svg vector files, and Autodesk .dxf CAD files formatted for CNC routers and laser engraving software."
+              }
+            }
+          ]
+        }
+      ]
+    };
 ---
 
 <!DOCTYPE html>
-<html lang="en" class={isApp ? "app-html" : ""}>
+<html lang={isZh ? "zh-CN" : "en"} class={isApp ? "app-html" : ""}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
@@ -121,6 +293,11 @@ const jsonLd = {
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
     <link rel="canonical" href={canonicalURL} />
     <meta name="theme-color" content="#ffffff" />
+
+    <!-- Multilingual Hreflang Tags (Google SEO Standard) -->
+    <link rel="alternate" hreflang="en" href={enCanonicalURL} />
+    <link rel="alternate" hreflang="zh-CN" href={zhCanonicalURL} />
+    <link rel="alternate" hreflang="x-default" href={enCanonicalURL} />
     
     <!-- Favicon & Touch Icons -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
@@ -138,7 +315,8 @@ const jsonLd = {
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogImage} />
-    <meta property="og:site_name" content="FontSVG" />
+    <meta property="og:site_name" content={siteConfig.name} />
+    <meta property="og:locale" content={isZh ? "zh_CN" : "en_US"} />
     
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
@@ -156,7 +334,7 @@ const jsonLd = {
   <body class={isApp ? "app-body" : "doc-body"}>
     <header class="site-header">
       <div class="header-inner">
-        <a href={siteConfig.base} class="brand" aria-label={`${siteConfig.name} Home`}>
+        <a href={homeLink} class="brand" aria-label={`${siteConfig.name} Home`}>
           <svg class="brand-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect width="32" height="32" rx="8" fill="#111827" />
             <path d="M9 24V8H22V11.5H13V14.5H20.5V18H13V24H9Z" fill="#FFFFFF" />
@@ -164,27 +342,39 @@ const jsonLd = {
           </svg>
           <div class="brand-text">
             <span class="brand-name">{siteConfig.name}</span>
-            <span class="brand-tagline">{siteConfig.tagline}</span>
+            <span class="brand-tagline">{i18n.site.tagline}</span>
           </div>
         </a>
 
         <nav class="header-nav">
           {isApp ? (
-            <a href="/about" class="nav-link">
+            <a href={aboutLink} class="nav-link">
               <i class="ri-information-line"></i>
-              <span>About &amp; Guide</span>
+              <span>{i18n.nav.about}</span>
             </a>
           ) : (
             <>
-              <a href="/" class="nav-link btn-tool-link">
+              <a href={homeLink} class="nav-link btn-tool-link">
                 <i class="ri-arrow-left-line"></i>
-                <span>Back to App</span>
+                <span>{i18n.nav.backToApp}</span>
               </a>
-              <a href="/about#features" class="nav-link">Features</a>
-              <a href="/about#use-cases" class="nav-link">Use Cases</a>
-              <a href="/about#faq" class="nav-link">FAQ</a>
+              <a href={`${aboutLink}#features`} class="nav-link">{i18n.nav.features}</a>
+              <a href={`${aboutLink}#custom-fonts`} class="nav-link">{i18n.nav.customFonts}</a>
+              <a href={`${aboutLink}#use-cases`} class="nav-link">{i18n.nav.useCases}</a>
+              <a href={`${aboutLink}#faq`} class="nav-link">{i18n.nav.faq}</a>
             </>
           )}
+
+          <!-- Language Switcher -->
+          <a 
+            href={isZh ? enPath : zhPath} 
+            class="lang-switch" 
+            title={isZh ? "Switch to English" : "切换为简体中文"}
+          >
+            <i class="ri-global-line"></i>
+            <span>{i18n.nav.switchLabel}</span>
+          </a>
+
           <a 
             href={siteConfig.links.github} 
             target="_blank" 
@@ -211,11 +401,11 @@ const jsonLd = {
       <footer class="site-footer">
         <div class="footer-inner">
           <div class="footer-copy">
-            <p>&copy; {new Date().getFullYear()} <a href={siteConfig.url}>{siteConfig.name}</a> by <a href={siteConfig.author.url} target="_blank" rel="noopener noreferrer">{siteConfig.author.name}</a>. Open source under the MIT License.</p>
-            <p class="attribution">Based on the original open-source project by <a href={siteConfig.links.upstream} target="_blank" rel="noopener noreferrer">Dan Marshall</a>.</p>
+            <p>&copy; {new Date().getFullYear()} <a href={homeLink}>{siteConfig.name}</a> by <a href={siteConfig.author.url} target="_blank" rel="noopener noreferrer">{siteConfig.author.name}</a>. {i18n.footer.attribution}</p>
+            <p class="attribution">{i18n.footer.upstreamNotice} <a href={siteConfig.links.upstream} target="_blank" rel="noopener noreferrer">Dan Marshall</a>.</p>
           </div>
           <div class="footer-links">
-            <a href="/sitemap.xml" target="_blank" rel="noopener noreferrer" class="footer-link"><i class="ri-node-tree"></i> Sitemap</a>
+            <a href="/sitemap.xml" target="_blank" rel="noopener noreferrer" class="footer-link"><i class="ri-node-tree"></i> {i18n.footer.sitemap}</a>
             <a href={siteConfig.links.github} target="_blank" rel="noopener noreferrer" class="footer-link"><i class="ri-github-fill"></i> GitHub</a>
             <a href={siteConfig.links.googleFonts} target="_blank" rel="noopener noreferrer" class="footer-link"><i class="ri-google-fill"></i> Google Fonts</a>
           </div>

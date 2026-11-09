@@ -8,10 +8,10 @@
     "font-to-svg": "./bin/font-to-svg.mjs"
   },
   "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview",
-    "start": "astro dev",
+    "dev": "ASTRO_TELEMETRY_DISABLED=1 astro dev",
+    "build": "ASTRO_TELEMETRY_DISABLED=1 astro build",
+    "preview": "ASTRO_TELEMETRY_DISABLED=1 astro preview",
+    "start": "ASTRO_TELEMETRY_DISABLED=1 astro dev",
     "font-to-svg": "node ./bin/font-to-svg.mjs",
     "api": "node ./scripts/api-server.mjs",
     "serve:api": "node ./scripts/api-server.mjs",

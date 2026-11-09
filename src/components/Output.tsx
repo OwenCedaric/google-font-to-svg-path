@@ -1,19 +1,22 @@
 import React, { useState } from 'react';
+import { getI18n, type Lang } from '../i18n/translations';
 
 interface OutputProps {
   state: any;
+  lang?: Lang;
 }
 
-export default function Output({ state }: OutputProps) {
+export default function Output({ state, lang = 'en' }: OutputProps) {
+  const t = getI18n(lang).ui;
   const { svgOutput, dxfOutput, errorMessage, text } = state;
   const [activeTab, setActiveTab] = useState<'preview' | 'code'>('preview');
-  const [copyStatus, setCopyStatus] = useState('Copy SVG');
+  const [copyStatus, setCopyStatus] = useState(t.copySvg);
 
   const copyToClipboard = () => {
     if (svgOutput) {
       navigator.clipboard.writeText(svgOutput).then(() => {
-        setCopyStatus('Copied!');
-        setTimeout(() => setCopyStatus('Copy SVG'), 2000);
+        setCopyStatus(t.copied);
+        setTimeout(() => setCopyStatus(t.copySvg), 2000);
       }).catch(err => {
         console.error('Failed to copy: ', err);
       });
@@ -46,7 +49,7 @@ export default function Output({ state }: OutputProps) {
       const btn = document.getElementById('create-link');
       if (btn) {
         const originalText = btn.innerHTML;
-        btn.innerText = 'Copied Link!';
+        btn.innerText = t.copiedLink;
         setTimeout(() => {
           btn.innerHTML = originalText;
         }, 2000);
@@ -71,19 +74,42 @@ export default function Output({ state }: OutputProps) {
         </div>
       )}
 
+      {state.missingGlyphs && (
+        <div style={{
+          color: '#b45309',
+          background: '#fffbeb',
+          border: '1px solid #fef3c7',
+          padding: '0.75rem 1rem',
+          borderRadius: '6px',
+          marginBottom: '1rem',
+          fontSize: '0.85rem',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '8px',
+          lineHeight: 1.4,
+        }}>
+          <i className="ri-alert-line" style={{ fontSize: '18px', flexShrink: 0 }} />
+          <span>
+            {lang === 'zh'
+              ? '当前选择的字体不包含部分输入字符（如中文汉字），缺失字符将显示为方框。请在右侧选择“⭐ 推荐中文字体”或上传本地字体文件。'
+              : 'The selected font does not contain glyphs for some characters in your text (shown as empty boxes). Please select a font supporting this character set or upload a custom font file.'}
+          </span>
+        </div>
+      )}
+
       <div className="tabs-wrapper">
         <div className="tabs-header">
           <button 
             className={`tab-btn ${activeTab === 'preview' ? 'active' : ''}`}
             onClick={() => setActiveTab('preview')}
           >
-            Preview
+            {t.preview}
           </button>
           <button 
             className={`tab-btn ${activeTab === 'code' ? 'active' : ''}`}
             onClick={() => setActiveTab('code')}
           >
-            SVG Code
+            {t.code}
           </button>
         </div>
 
@@ -120,7 +146,7 @@ export default function Output({ state }: OutputProps) {
         </button>
         <button id="create-link" className="btn btn-outline" onClick={createLink}>
           <i className="ri-link" />
-          <span>Share Link</span>
+          <span>{t.shareLink}</span>
         </button>
       </div>
     </div>

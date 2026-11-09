@@ -70,10 +70,23 @@ export async function renderSvg(state: any) {
       usePOLYLINE: true
     });
 
+    let missingGlyphs = false;
+    if (font && text) {
+      for (const char of text) {
+        if (/\s/.test(char)) continue;
+        const glyphs = font.stringToGlyphs(char);
+        if (glyphs.length > 0 && (glyphs[0].index === 0 || glyphs[0].name === '.notdef')) {
+          missingGlyphs = true;
+          break;
+        }
+      }
+    }
+
     return {
       svgOutput: svg,
       dxfOutput: dxf,
       errorMessage: '',
+      missingGlyphs,
     };
   } catch (err: any) {
     return {

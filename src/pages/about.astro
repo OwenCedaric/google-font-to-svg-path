@@ -5,6 +5,7 @@ import '../styles/index.css';
 ---
 
 <Layout
+  lang="en"
   title="About & Guide | FontSVG"
   description="Explore FontSVG features: convert 1,500+ Google Fonts and custom local TTF/OTF fonts into clean vector SVG paths and CAD DXF drawings with client-side privacy."
   isApp={false}
@@ -75,6 +76,37 @@ import '../styles/index.css';
             <div class="feature-icon"><i class="ri-shield-check-line"></i></div>
             <h3>100% Client-Side Privacy</h3>
             <p>Zero telemetry, zero server-side rendering. Your confidential fonts, proprietary logos, and sensitive text never leave your local device.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Custom Font Upload Deep Dive Section -->
+    <section class="seo-section" id="custom-fonts">
+      <div class="seo-container">
+        <div class="section-header">
+          <span class="badge">Local Font Upload &amp; Privacy</span>
+          <h2>Upload Any Custom Font with Zero-Leak Local Privacy</h2>
+          <p class="subtitle">Convert proprietary brand typography, paid commercial desktop fonts, and custom typefaces without uploading files to any remote server.</p>
+        </div>
+
+        <div class="features-grid">
+          <article class="feature-card">
+            <div class="feature-icon"><i class="ri-file-code-line"></i></div>
+            <h3>TTF, OTF, WOFF &amp; WOFF2 Support</h3>
+            <p>Directly load TrueType (<code>.ttf</code>), OpenType (<code>.otf</code>), and Web Open Font Format (<code>.woff</code>/<code>.woff2</code>) files. The glyph outlines are parsed instantaneously into vector math.</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon"><i class="ri-lock-password-line"></i></div>
+            <h3>100% In-Browser Privacy Protection</h3>
+            <p>Proprietary font licenses and client typography never leave your computer. OpenType.js runs completely inside your browser tab, ensuring strict compliance with NDAs and enterprise privacy policies.</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon"><i class="ri-global-line"></i></div>
+            <h3>Universal Unicode &amp; CJK Glyph Support</h3>
+            <p>Upload fonts containing non-Latin character sets including Chinese, Japanese, Korean, Arabic, Cyrillic, and special glyph symbols. Every character with vector contours is accurately converted.</p>
           </article>
         </div>
       </div>
@@ -172,6 +204,20 @@ import '../styles/index.css';
             <summary class="faq-question">Why convert fonts into SVG paths?</summary>
             <div class="faq-answer">
               <p>Converting fonts to SVG paths turns text characters into raw vector coordinates. This guarantees that your typography renders identically across every operating system and browser without requiring visitors to download font files. It also allows direct boolean manipulation in vector tools and CNC machines.</p>
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary class="faq-question">Can I upload and convert my own custom font files (TTF, OTF, WOFF)?</summary>
+            <div class="faq-answer">
+              <p>Yes! In the sidebar settings, open the <strong>Font</strong> section and click <em>Choose .ttf / .otf file</em>. You can upload TrueType (.ttf), OpenType (.otf), and web fonts (.woff, .woff2). All glyph curves are parsed locally via OpenType.js without sending any data over the internet.</p>
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary class="faq-question">Does FontSVG support Chinese, Japanese, and non-Latin character sets?</summary>
+            <div class="faq-answer">
+              <p>Yes. When you upload a custom font file containing CJK (Chinese, Japanese, Korean) or other international Unicode characters, FontSVG extracts the glyph contours directly from the font's glyph tables. In addition, you can choose Google Fonts supporting international scripts directly from the dropdown.</p>
             </div>
           </details>
 

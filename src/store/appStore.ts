@@ -22,6 +22,7 @@ export interface AppState {
   svgOutput: string;
   dxfOutput: string;
   errorMessage: string;
+  missingGlyphs?: boolean;
 }
 
 export const defaultState: AppState = {

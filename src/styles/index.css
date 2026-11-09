@@ -636,6 +636,27 @@ details[open] summary::after {
   background: #e5e7eb;
 }
 
+.lang-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #374151;
+  text-decoration: none;
+  padding: 0.32rem 0.65rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  background: #ffffff;
+  transition: all 0.15s ease;
+}
+
+.lang-switch:hover {
+  background: #f9fafb;
+  border-color: #cbd5e1;
+  color: #111827;
+}
+
 /* ==========================================================================
    About Page & Document Styles
    ========================================================================== */
@@ -1007,4 +1028,17 @@ details[open] summary::after {
   .seo-section {
     padding: 3rem 1rem;
   }
+}
+
+/* Accessibility & Crawler Utility */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }

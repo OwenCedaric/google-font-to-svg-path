@@ -1,0 +1,254 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import 'remixicon/fonts/remixicon.css';
+import '../../styles/index.css';
+---
+
+<Layout
+  lang="zh"
+  title="使用指南与关于 | FontSVG"
+  description="FontSVG 功能全览：将 1,500+ 款 Google 字体及本地上传的 TTF、OTF、WOFF 字体转换为平滑矢量 SVG 路径与 CAD DXF 轮廓线。纯前端解析保护隐私，支持连笔字合并与激光切割。"
+  isApp={false}
+>
+  <div class="about-page">
+    <!-- Hero Section -->
+    <header class="about-hero">
+      <div class="seo-container">
+        <span class="badge"><i class="ri-sparkling-fill"></i> 文档与功能全览</span>
+        <h1 class="hero-title">关于 FontSVG</h1>
+        <p class="hero-subtitle">
+          FontSVG 是一款开源、纯浏览器本地运行的字体矢量化转换器。无论是在线 Google 字体还是您电脑里的私有桌面字体（.ttf, .otf, .woff, .woff2），都能在毫秒内转换为连续闭合的 SVG <code>&lt;path&gt;</code> 路径代码与 CAD DXF 工程图纸，绝不上传服务器，全流程无网络回传。
+        </p>
+        <div class="hero-actions">
+          <a href="/zh/" class="btn btn-primary">
+            <i class="ri-magic-line"></i>
+            <span>立即使用工具</span>
+          </a>
+          <a href="#features" class="btn btn-outline">
+            <i class="ri-list-check"></i>
+            <span>浏览功能特性</span>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Features Section -->
+    <section class="seo-section" id="features">
+      <div class="seo-container">
+        <div class="section-header">
+          <span class="badge">核心能力矩阵</span>
+          <h2>触手可及的工业级矢量文字轮廓生成</h2>
+          <p class="subtitle">无论是物理制造加工还是数字 UI 设计，高精度的闭合矢量路径让一切充满无限可能。</p>
+        </div>
+
+        <div class="features-grid">
+          <article class="feature-card">
+            <div class="feature-icon"><i class="ri-google-fill"></i></div>
+            <h3>1,500+ Google 字体</h3>
+            <p>直接集成 Google Fonts 在线字库，支持按字体名即时筛选和实时渲染无衬线体、衬线体、手写体与艺术展示字。</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon"><i class="ri-folder-upload-line"></i></div>
+            <h3>本地字体安全上传</h3>
+            <p>支持直接拖入 <code>.ttf</code>、<code>.otf</code>、<code>.woff</code>、<code>.woff2</code> 字体文件。通过 OpenType.js 在浏览器本地极速解析字形，无需上传服务器。</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon"><i class="ri-shape-line"></i></div>
+            <h3>布尔合并 (Union 焊接)</h3>
+            <p>内置 Maker.js 几何引擎，自动将手写连笔字、草书重叠的字母轮廓熔接合并，彻底消除交叉内部多余切线，专为激光雕刻定制。</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon"><i class="ri-compasses-2-line"></i></div>
+            <h3>高精度贝塞尔曲线</h3>
+            <p>支持微调二次与三次贝塞尔曲线拟合公差，在保证平滑度的同时最大化精简矢量节点数量，显著缩小输出文件体积。</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon"><i class="ri-text-wrap"></i></div>
+            <h3>多行排版与间距控制</h3>
+            <p>支持自由输入多行文字，自定义行高比例倍数，智能跳过空行，并精确应用字体底层度量指标的字距微调（Kerning）。</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon"><i class="ri-shield-check-line"></i></div>
+            <h3>100% 浏览器客户端隐私</h3>
+            <p>零数据追踪、零云端渲染。您上传的商用机密字体、品牌私有字库以及敏感文字内容永远只保留在您的本地设备中。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Custom Font Upload Deep Dive Section -->
+    <section class="seo-section" id="custom-fonts">
+      <div class="seo-container">
+        <div class="section-header">
+          <span class="badge">本地字体上传与商用版权保护</span>
+          <h2>上传电脑里的任意中英文字体，零泄露风险</h2>
+          <p class="subtitle">中文字体体积太大无法在线加载？直接拖入本地字体，本地毫秒级提取路径，商业版权与企业隐私 100% 安全。</p>
+        </div>
+
+        <div class="features-grid">
+          <article class="feature-card">
+            <div class="feature-icon"><i class="ri-file-code-line"></i></div>
+            <h3>TTF, OTF, WOFF 格式全面兼容</h3>
+            <p>支持加载 TrueType（<code>.ttf</code>）、OpenType（<code>.otf</code>）以及 Web 字体格式（<code>.woff</code>/<code>.woff2</code>），字形外轮廓瞬间转化为连续数学坐标。</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon"><i class="ri-lock-password-line"></i></div>
+            <h3>严格符合企业保密协议 (NDA)</h3>
+            <p>付费商业字体和未公开品牌字库通常禁止分发至第三方服务器。FontSVG 纯在浏览器标签页内存中计算，不发任何网络请求，符合合规审查。</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon"><i class="ri-global-line"></i></div>
+            <h3>完整支持汉字 CJK 与国际字符集</h3>
+            <p>上传包含中文简体、繁体、日文假名、韩文谚文或特殊符号的字体文件，工具能直接根据 Unicode 编码表提取闭合轮廓，无缺失乱码。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Use Cases Section -->
+    <section class="seo-section bg-alt" id="use-cases">
+      <div class="seo-container">
+        <div class="section-header">
+          <span class="badge">行业实战场景</span>
+          <h2>专为设计师、创客与加工工程师打造</h2>
+          <p class="subtitle">从屏幕上的 UI 动态图形，到车间里的激光雕刻与 CNC 机床，纯净矢量轮廓是制造的核心基石。</p>
+        </div>
+
+        <div class="use-cases-grid">
+          <div class="use-case-box">
+            <h4>激光切割与激光雕刻</h4>
+            <p>导出焊平消除重叠线的 DXF 与 SVG 几何轮廓，直连 LightBurn、LaserCAD、Cricut Design Space 等切割软件，防止材料反复被切穿。</p>
+          </div>
+          <div class="use-case-box">
+            <h4>CNC 雕刻机与木工开料</h4>
+            <p>生成具有真实物理尺寸单位（毫米、厘米、英寸）的闭合矢量环，可无缝导入 Fusion 360、Vectric Aspire、文泰雕刻生成刀路。</p>
+          </div>
+          <div class="use-case-box">
+            <h4>前端开发与 SVG 描边动画</h4>
+            <p>一键提取纯净的 <code>&lt;path d="..."&gt;</code> 坐标，在 CSS、GSAP 或 Framer Motion 中实现炫酷的毛笔字/签字笔连笔动画，无需引入几十兆字体包。</p>
+          </div>
+          <div class="use-case-box">
+            <h4>3D 打印与 CAD 实体挤出</h4>
+            <p>将导出的 DXF/SVG 轮廓导入 Blender、SolidWorks 或 FreeCAD，直接进行无缝 3D 实体拉伸，彻底杜绝自相交网格报错。</p>
+          </div>
+        </div>
+
+        <div class="comparison-wrapper">
+          <h3 class="comparison-title">对比横评：FontSVG 与传统方案对比</h3>
+          <div class="table-responsive">
+            <table class="comparison-table">
+              <thead>
+                <tr>
+                  <th>对比项目</th>
+                  <th>FontSVG (本项目)</th>
+                  <th>Adobe Illustrator / CorelDraw</th>
+                  <th>传统网络格式转换网站</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>使用成本与门槛</td>
+                  <td><strong>100% 免费，免注册安装</strong></td>
+                  <td>昂贵月度订阅 / 需安装数 GB 软件</td>
+                  <td>按次收费 / 充斥弹窗广告</td>
+                </tr>
+                <tr>
+                  <td>数据隐私与安全性</td>
+                  <td><strong>100% 浏览器本地离线运行</strong></td>
+                  <td>本地桌面运行</td>
+                  <td>文件上传服务器（易泄漏商用字体）</td>
+                </tr>
+                <tr>
+                  <td>SVG Path 路径复制代码</td>
+                  <td><strong>一键秒级复制纯 &lt;path&gt;</strong></td>
+                  <td>导出流程繁琐，含冗余 XML 标签</td>
+                  <td>通常仅支持整张图片下载</td>
+                </tr>
+                <tr>
+                  <td>CAD DXF 工业格式导出</td>
+                  <td><strong>原生支持，可精准控制物理尺寸</strong></td>
+                  <td>支持导出，但配置复杂</td>
+                  <td>基本不支持 DXF 格式</td>
+                </tr>
+                <tr>
+                  <td>本地中英文字体上传</td>
+                  <td><strong>即拖即用 (.ttf/.otf/.woff)</strong></td>
+                  <td>需在操作系统中安装字体</td>
+                  <td>部分支持，但上传耗时漫长</td>
+                </tr>
+                <tr>
+                  <td>连笔字自动合并 (Union)</td>
+                  <td><strong>一键布尔焊接消除内部交叉线</strong></td>
+                  <td>需手动执行“创建轮廓+联集”</td>
+                  <td>不支持几何布尔运算</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="seo-section" id="faq">
+      <div class="seo-container">
+        <div class="section-header">
+          <span class="badge">常见问题解答</span>
+          <h2>关于字体矢量转换的答疑</h2>
+          <p class="subtitle">有关矢量路径提取、CAD 导出以及字体隐私安全的常见问题说明。</p>
+        </div>
+
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary class="faq-question">为什么要把字体转换为 SVG 矢量路径？</summary>
+            <div class="faq-answer">
+              <p>将字体转换为 SVG 路径会将文字轮廓分解为绝对的矢量数学坐标。这能确保在任何设备和浏览器中渲染时 100% 一致，无需访问者下载任何字体文件；同时，提取出的路径可直接用于物理切割加工、CNC 刀路生成以及 SVG 描边动画。</p>
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary class="faq-question">是否可以上传并转换本地字体文件（TTF、OTF、WOFF）？</summary>
+            <div class="faq-answer">
+              <p>完全可以！在左侧设置面板的“字体配置”中，点击“选择 .ttf / .otf / .woff 文件”即可载入您本地电脑里的任意字体（包括商业字体、书法中文字体）。所有解析均通过 OpenType.js 在本地浏览器内存中进行，无需上传服务器。</p>
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary class="faq-question">是否支持中文、日文等非拉丁字符？</summary>
+            <div class="faq-answer">
+              <p>完全支持。当您上传包含 CJK（中日韩）汉字字符集的字体时，FontSVG 会按字符的 Unicode 编码读取轮廓数据。此外，您也可以在 Google Fonts 列表中直接选择支持中文字符的开源字体（如 Noto Sans SC、Noto Serif SC、Ma Shan Zheng 等）。</p>
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary class="faq-question">“合并重叠路径 (Union)”有什么作用？</summary>
+            <div class="faq-answer">
+              <p>开启“合并重叠路径 (Union)”后，工具会利用 Maker.js 几何引擎对所有文字轮廓执行布尔联集操作。在草书、行书或手写体中，相邻笔画通常互相穿插交叉；如果不做合并，激光雕刻机或刻字机就会在交叉处重复切割导致工件断裂。Union 功能会自动将它们融合成一条闭合的外轮廓。</p>
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary class="faq-question">FontSVG 生成的结果可以用于商业项目吗？</summary>
+            <div class="faq-answer">
+              <p>可以。FontSVG 遵循 MIT 开源协议，工具本身对个人和商业项目完全免费。请确保您所使用的字体本身的授权条款（如 Google Fonts 的 SIL Open Font License，或您购买的商业中文字体授权）允许您在相应的商业环境中使用。</p>
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary class="faq-question">FontSVG 会存储或上传我输入的文字和文件吗？</summary>
+            <div class="faq-answer">
+              <p>绝不会。FontSVG 是 100% 纯前端运行的静态应用，所有文字排版、字体解码、Maker.js 几何布尔计算都在您的浏览器本地执行。我们没有后端数据库，绝不存储、记录或上传任何用户文字与字体文件。</p>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+  </div>
+</Layout>

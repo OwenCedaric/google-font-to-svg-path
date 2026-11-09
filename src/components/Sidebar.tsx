@@ -2,13 +2,16 @@ import React, { useMemo } from 'react';
 // @ts-ignore
 import makerjs from 'makerjs';
 import * as opentype from 'opentype.js';
+import { getI18n, type Lang } from '../i18n/translations';
 
 interface SidebarProps {
   state: any;
   setState: (updater: (prev: any) => any) => void;
+  lang?: Lang;
 }
 
-export default function Sidebar({ state, setState }: SidebarProps) {
+export default function Sidebar({ state, setState, lang = 'en' }: SidebarProps) {
+  const t = getI18n(lang).ui;
   const {
     fontList,
     customFont,
@@ -30,18 +33,42 @@ export default function Sidebar({ state, setState }: SidebarProps) {
     fillRule,
   } = state;
 
+  const CHINESE_FONTS = useMemo(() => [
+    { family: 'Ma Shan Zheng', label: 'Ma Shan Zheng (马善政楷书)' },
+    { family: 'ZCOOL KuaiLe', label: 'ZCOOL KuaiLe (站酷快乐体)' },
+    { family: 'Long Cang', label: 'Long Cang (龙仓草书)' },
+    { family: 'ZCOOL QingKe HuangYou', label: 'ZCOOL 黄油体 (站酷高端黑)' },
+    { family: 'ZCOOL XiaoWei', label: 'ZCOOL XiaoWei (站酷小薇体)' },
+    { family: 'Zhi Mang Xing', label: 'Zhi Mang Xing (志莽行书)' },
+    { family: 'Liu Jian Mao Cao', label: 'Liu Jian Mao Cao (刘建毛草)' },
+    { family: 'Noto Serif SC', label: 'Noto Serif SC (思源宋体)' },
+  ], []);
+
   const fontVariants = fontList && fontFamily
     ? fontList.items.find((f: any) => f.family === fontFamily)?.variants || []
     : [];
 
   const fontOptions = useMemo(() => {
-    if (!fontList) return <option>Loading fonts...</option>;
-    return fontList.items.map((font: any) => (
-      <option key={font.family} value={font.family}>
-        {font.family}
-      </option>
-    ));
-  }, [fontList]);
+    if (!fontList) return <option>{t.loadingFonts}</option>;
+    return (
+      <>
+        <optgroup label={lang === 'zh' ? '⭐ 推荐中文字体 (支持汉字)' : '⭐ Chinese Compatible Fonts'}>
+          {CHINESE_FONTS.map(cf => (
+            <option key={cf.family} value={cf.family}>
+              {cf.label}
+            </option>
+          ))}
+        </optgroup>
+        <optgroup label={lang === 'zh' ? '全部 Google 在线字体 (1,500+)' : 'All Google Fonts (1,500+)'}>
+          {fontList.items.map((font: any) => (
+            <option key={font.family} value={font.family}>
+              {font.family}
+            </option>
+          ))}
+        </optgroup>
+      </>
+    );
+  }, [fontList, t.loadingFonts, lang, CHINESE_FONTS]);
 
   const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
@@ -62,20 +89,20 @@ export default function Sidebar({ state, setState }: SidebarProps) {
 
   return (
     <div className="sidebar-content">
-      <h2 id="settings-title">Settings</h2>
+      <h2 id="settings-title">{t.settings}</h2>
       
       <details open>
-        <summary>Font</summary>
+        <summary>{t.font}</summary>
         <div>
           <div className="label-with-link">
-            <label>Google font</label>
+            <label>{t.googleFont}</label>
             <a
               href="https://fonts.google.com/"
               target="_blank"
               rel="noopener noreferrer"
               className="link-btn"
             >
-              <span>Browse</span>
+              <span>{t.browse}</span>
               <i className="ri-external-link-line" style={{ fontSize: '11px' }} />
             </a>
           </div>
@@ -88,7 +115,7 @@ export default function Sidebar({ state, setState }: SidebarProps) {
             {fontOptions}
           </select>
 
-          <label>Variant</label>
+          <label>{t.variant}</label>
           <select
             id="font-variant"
             value={fontVariant}
@@ -102,11 +129,11 @@ export default function Sidebar({ state, setState }: SidebarProps) {
             ))}
           </select>
 
-          <label>Upload custom font</label>
+          <label>{t.uploadCustomFont}</label>
           <div className="file-input-wrapper">
             <div className="file-input-custom">
               <i className="ri-upload-2-line" style={{ marginRight: '8px', fontSize: '14px' }} />
-              {customFont ? 'Custom font loaded' : 'Choose .ttf / .otf file'}
+              {customFont ? t.customFontLoaded : t.chooseFile}
             </div>
             <input
               id="font-upload"
@@ -123,7 +150,7 @@ export default function Sidebar({ state, setState }: SidebarProps) {
                 onClick={handleRemoveFont}
                 style={{ color: '#e53e3e', borderColor: '#feb2b2' }}
               >
-                Remove Custom Font
+                {t.removeCustomFont}
               </button>
             </div>
           )}
@@ -131,9 +158,9 @@ export default function Sidebar({ state, setState }: SidebarProps) {
       </details>
 
       <details open>
-        <summary>Text</summary>
+        <summary>{t.text}</summary>
         <div>
-          <label>Input text</label>
+          <label>{t.inputText}</label>
           <textarea
             id="input-text"
             rows={3}
@@ -143,7 +170,7 @@ export default function Sidebar({ state, setState }: SidebarProps) {
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
             <div>
-              <label>Size</label>
+              <label>{t.size}</label>
               <input
                 type="number"
                 id="input-size"
@@ -152,7 +179,7 @@ export default function Sidebar({ state, setState }: SidebarProps) {
               />
             </div>
             <div>
-              <label>Line height</label>
+              <label>{t.lineHeight}</label>
               <input
                 type="number"
                 id="input-line-height"
@@ -172,15 +199,15 @@ export default function Sidebar({ state, setState }: SidebarProps) {
               onChange={(e) => setState(prev => ({ ...prev, kerning: e.target.checked }))}
               style={{ width: 'auto' }}
             />
-            <span>Enable kerning</span>
+            <span>{t.enableKerning}</span>
           </label>
         </div>
       </details>
 
       <details>
-        <summary>Stroke & Fill</summary>
+        <summary>{t.strokeAndFill}</summary>
         <div>
-          <label>Stroke color</label>
+          <label>{t.strokeColor}</label>
           <div style={{ display: 'flex', gap: '8px' }}>
             <input
               type="color"
@@ -197,7 +224,7 @@ export default function Sidebar({ state, setState }: SidebarProps) {
             />
           </div>
 
-          <label>Stroke width</label>
+          <label>{t.strokeWidth}</label>
           <input
             type="text"
             id="input-stroke-width"
@@ -213,7 +240,7 @@ export default function Sidebar({ state, setState }: SidebarProps) {
               onChange={(e) => setState(prev => ({ ...prev, strokeNonScaling: e.target.checked }))}
               style={{ width: 'auto' }}
             />
-            <span>Non-scaling stroke</span>
+            <span>{t.nonScalingStroke}</span>
           </label>
 
           <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', marginTop: '1.5rem' }}>
@@ -224,10 +251,10 @@ export default function Sidebar({ state, setState }: SidebarProps) {
               onChange={(e) => setState(prev => ({ ...prev, filled: e.target.checked }))}
               style={{ width: 'auto' }}
             />
-            <span>Enable fill</span>
+            <span>{t.enableFill}</span>
           </label>
 
-          <label>Fill color</label>
+          <label>{t.fillColor}</label>
           <div style={{ display: 'flex', gap: '8px' }}>
             <input
               type="color"
@@ -244,7 +271,7 @@ export default function Sidebar({ state, setState }: SidebarProps) {
             />
           </div>
 
-          <label>Fill rule</label>
+          <label>{t.fillRule}</label>
           <select
             id="input-fill-rule"
             value={fillRule}
@@ -257,7 +284,7 @@ export default function Sidebar({ state, setState }: SidebarProps) {
       </details>
 
       <details>
-        <summary>Advanced Options</summary>
+        <summary>{t.advancedOptions}</summary>
         <div>
           <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
             <input
@@ -267,7 +294,7 @@ export default function Sidebar({ state, setState }: SidebarProps) {
               onChange={(e) => setState(prev => ({ ...prev, union: e.target.checked }))}
               style={{ width: 'auto' }}
             />
-            <span>Union paths</span>
+            <span>{t.unionPaths}</span>
           </label>
 
           <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
@@ -278,10 +305,10 @@ export default function Sidebar({ state, setState }: SidebarProps) {
               onChange={(e) => setState(prev => ({ ...prev, separate: e.target.checked }))}
               style={{ width: 'auto' }}
             />
-            <span>Separate characters</span>
+            <span>{t.separateCharacters}</span>
           </label>
 
-          <label>Bezier accuracy (auto if empty)</label>
+          <label>{t.bezierAccuracy}</label>
           <input
             type="text"
             id="input-bezier-accuracy"
@@ -290,13 +317,13 @@ export default function Sidebar({ state, setState }: SidebarProps) {
             onChange={(e) => setState(prev => ({ ...prev, bezierAccuracy: e.target.value }))}
           />
 
-          <label>DXF Units</label>
+          <label>{t.dxfUnits}</label>
           <select
             id="dxf-units"
             value={dxfUnits}
             onChange={(e) => setState(prev => ({ ...prev, dxfUnits: e.target.value }))}
           >
-            <option value="">Select units...</option>
+            <option value="">{t.selectUnits}</option>
             {Object.values(makerjs.unitType).map((unit: any) => (
               <option key={unit} value={unit}>
                 {unit}

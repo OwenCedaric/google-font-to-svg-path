@@ -1,0 +1,36 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import App from '../../components/App.tsx';
+import 'remixicon/fonts/remixicon.css';
+import '../../styles/index.css';
+---
+
+<Layout isApp={true} lang="zh">
+  <script is:inline src="/bezier.js" slot="head"></script>
+  
+  <App client:idle lang="zh" slot="content" />
+
+  <!-- 搜索引擎爬虫与屏幕阅读器语义化内容 -->
+  <section class="sr-only" aria-label="工具概述与字体转矢量说明">
+    <h1>FontSVG — 字体在线转 SVG 路径与 CAD DXF 轮廓生成器</h1>
+    <p>
+      FontSVG 是一款免费、无广告、纯前端运行的字体矢量化转换工具。支持 1,500+ 款 Google 在线字体，并支持直接上传本地电脑里的 TTF、OTF、WOFF 字体文件（包括中文字体），毫秒级提取平滑无损的 SVG 路径（&lt;path d="..."&gt;）与 CAD DXF 轮廓线。
+    </p>
+    <h2>核心功能特性</h2>
+    <ul>
+      <li>本地字体安全上传：支持 .ttf、.otf、.woff、.woff2 格式，文件不出本地电脑，100% 保护商用字体版权与企业隐私。</li>
+      <li>内置 1,500+ Google 字体在线检索与即时渲染。</li>
+      <li>连笔草书布尔合并（Union / 联集）：自动消除文字交叉重叠线，生成激光切割与 CNC 雕刻即用的单一平滑外轮廓。</li>
+      <li>支持多行文本排版、自由字号、行高调节与字距微调（Kerning）。</li>
+      <li>CAD DXF 工业级导出：支持选择毫米（mm）、厘米（cm）、英寸（inch）等实际尺寸单位，完美适配 LightBurn、Cricut、Fusion 360 等软件。</li>
+      <li>一键快速复制纯净 SVG 路径代码到剪贴板。</li>
+    </ul>
+    <h2>字体转 SVG 与 DXF 使用步骤</h2>
+    <ol>
+      <li>从字体列表中选择 Google 字体，或点击“选择 .ttf / .otf / .woff 文件”载入本地字体。</li>
+      <li>输入需要转换的文字内容，并配置字号、行高与字距。</li>
+      <li>如果是连笔或手写艺术字，勾选“合并重叠路径 (Union)”消除内部交叉线。</li>
+      <li>点击“复制 SVG 路径”直接取用代码，或点击“下载 SVG”与“导出 CAD DXF”保存图纸文件。</li>
+    </ol>
+  </section>
+</Layout>

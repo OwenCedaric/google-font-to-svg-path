@@ -3,8 +3,14 @@ import Sidebar from './Sidebar';
 import Output from './Output';
 import { loadGoogleFonts, renderSvg } from '../lib/fontUtils';
 import { defaultState } from '../store/appStore';
+import { getI18n, type Lang } from '../i18n/translations';
 
-export default function App() {
+interface AppProps {
+  lang?: Lang;
+}
+
+export default function App({ lang = 'en' }: AppProps) {
+  const t = getI18n(lang).ui;
   const [state, setState] = useState(defaultState);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
@@ -52,17 +58,17 @@ export default function App() {
       />
 
       <main className="main-content">
-        <Output state={state} />
+        <Output state={state} lang={lang} />
       </main>
 
       <div className={`drawer ${isDrawerOpen ? 'open' : ''}`}>
-        <Sidebar state={state} setState={setState} />
+        <Sidebar state={state} setState={setState} lang={lang} />
       </div>
 
       <button 
         className={`menu-toggle ${isDrawerOpen ? 'drawer-open' : ''}`} 
         onClick={toggleDrawer}
-        aria-label={isDrawerOpen ? "Close settings" : "Open settings"}
+        aria-label={isDrawerOpen ? t.closeSettings : t.openSettings}
       >
         <i className={isDrawerOpen ? "ri-arrow-right-s-line" : "ri-arrow-left-s-line"} style={{ fontSize: '22px' }} />
       </button>

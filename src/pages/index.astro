@@ -5,8 +5,31 @@ import 'remixicon/fonts/remixicon.css';
 import '../styles/index.css';
 ---
 
-<Layout isApp={true}>
+<Layout isApp={true} lang="en">
   <script is:inline src="/bezier.js" slot="head"></script>
   
-  <App client:idle slot="content" />
+  <App client:idle lang="en" slot="content" />
+
+  <!-- Semantic HTML for Search Engine Crawlers & Screen Readers -->
+  <section class="sr-only" aria-label="Tool Overview and Font Vectorization Guide">
+    <h1>Google Font &amp; Custom Font to SVG Path &amp; CAD DXF Converter</h1>
+    <p>
+      FontSVG is a free online tool to convert Google Fonts and custom uploaded fonts (.ttf, .otf, .woff, .woff2) into clean SVG paths (&lt;path d="..."&gt;) and CAD DXF drawings. 100% private in-browser parsing with OpenType.js and Maker.js.
+    </p>
+    <h2>Key Capabilities</h2>
+    <ul>
+      <li>Upload local custom font files: TTF, OTF, WOFF, and WOFF2 formats supported with zero server transmission.</li>
+      <li>Access 1,500+ Google Fonts directly from your browser.</li>
+      <li>Boolean union welding: automatically merge overlapping cursive and script glyphs into unified cutting paths.</li>
+      <li>Export CAD DXF files with millimeter, centimeter, and inch precision for CNC routers, laser cutters, and Cricut vinyl plotters.</li>
+      <li>Instant one-click copy of raw SVG vector path data.</li>
+    </ul>
+    <h2>How to Vectorize Fonts to SVG &amp; CAD DXF</h2>
+    <ol>
+      <li>Select a Google Font family from the list or upload your own .ttf / .otf / .woff file.</li>
+      <li>Enter your text and adjust font size, letter kerning, and line height.</li>
+      <li>Optionally enable 'Union' to weld overlapping script letters into a seamless outline.</li>
+      <li>Copy the generated SVG path coordinates or download complete .svg and .dxf files.</li>
+    </ol>
+  </section>
 </Layout>
