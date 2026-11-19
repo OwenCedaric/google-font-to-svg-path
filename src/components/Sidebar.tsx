@@ -33,7 +33,7 @@ export default function Sidebar({ state, setState, lang = 'en' }: SidebarProps) 
     fillRule,
   } = state;
 
-  const CHINESE_FONTS = useMemo(() => [
+  const CJK_FONTS = useMemo(() => [
     { family: 'Ma Shan Zheng', label: 'Ma Shan Zheng (马善政楷书)' },
     { family: 'ZCOOL KuaiLe', label: 'ZCOOL KuaiLe (站酷快乐体)' },
     { family: 'Long Cang', label: 'Long Cang (龙仓草书)' },
@@ -42,6 +42,11 @@ export default function Sidebar({ state, setState, lang = 'en' }: SidebarProps) 
     { family: 'Zhi Mang Xing', label: 'Zhi Mang Xing (志莽行书)' },
     { family: 'Liu Jian Mao Cao', label: 'Liu Jian Mao Cao (刘建毛草)' },
     { family: 'Noto Serif SC', label: 'Noto Serif SC (思源宋体)' },
+    { family: 'Noto Sans JP', label: 'Noto Sans JP (思源黑体日文)' },
+    { family: 'Noto Serif JP', label: 'Noto Serif JP (思源宋体日文)' },
+    { family: 'Zen Kaku Gothic New', label: 'Zen Kaku Gothic New (禅角黑体)' },
+    { family: 'Shippori Mincho', label: 'Shippori Mincho (しっぽり明朝)' },
+    { family: 'M PLUS Rounded 1c', label: 'M PLUS Rounded 1c (圆体)' },
   ], []);
 
   const fontVariants = fontList && fontFamily
@@ -52,8 +57,8 @@ export default function Sidebar({ state, setState, lang = 'en' }: SidebarProps) 
     if (!fontList) return <option>{t.loadingFonts}</option>;
     return (
       <>
-        <optgroup label={lang === 'zh' ? '⭐ 推荐中文字体 (支持汉字)' : '⭐ Chinese Compatible Fonts'}>
-          {CHINESE_FONTS.map(cf => (
+        <optgroup label={lang === 'zh' ? '⭐ 推荐中日文字体 (CJK 支持)' : '⭐ Recommended CJK Fonts (Chinese & Japanese)'}>
+          {CJK_FONTS.map(cf => (
             <option key={cf.family} value={cf.family}>
               {cf.label}
             </option>
@@ -68,7 +73,7 @@ export default function Sidebar({ state, setState, lang = 'en' }: SidebarProps) 
         </optgroup>
       </>
     );
-  }, [fontList, t.loadingFonts, lang, CHINESE_FONTS]);
+  }, [fontList, t.loadingFonts, lang, CJK_FONTS]);
 
   const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;

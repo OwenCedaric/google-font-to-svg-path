@@ -4,12 +4,12 @@ export const i18nData = {
   en: {
     site: {
       name: 'FontSVG',
-      tagline: 'Google Font & Custom Font to SVG Path',
-      title: 'FontSVG — Google Font & Custom Font to SVG Path / CAD DXF Converter',
+      tagline: 'Google Font to SVG Path & CAD DXF Converter',
+      title: 'Google Font to SVG Path Converter — Free Online Tool | FontSVG',
       description:
-        'Free online vector font converter. Convert 1,500+ Google Fonts or upload custom font files (TTF, OTF, WOFF) into clean vector SVG paths (<path d="...">) and CAD DXF outlines. Features script union welding, kerning, multi-line formatting, and 100% private in-browser processing.',
+        'Convert Google Fonts and custom fonts (TTF, OTF, WOFF) to clean vector SVG paths (<path d="...">) and CAD DXF outlines for free. 100% private in-browser.',
       keywords:
-        'google font to svg, font to svg path, upload font to svg, custom font to svg, ttf to svg, otf to svg converter, woff to svg, convert font to vector, text to svg path, font to dxf, text to vector outline, font vectorizer, cnc font path, laser cutting text vector, cursive font union, svg path generator, font outline extractor',
+        'google font to svg path, google font svg path, google font to svg, google fonts to svg, google fonts to svg path, font to svg path, font to svg, upload font to svg, custom font to svg, ttf to svg, otf to svg converter, woff to svg, convert font to vector, text to svg path, font to dxf, laser cutting text vector, cursive font union, svg path generator, font outline extractor, cjk font to svg',
     },
     nav: {
       home: 'Home',
@@ -67,17 +67,19 @@ export const i18nData = {
       attribution: 'Open source under the MIT License.',
       upstreamNotice: 'Based on the original open-source project by',
       sitemap: 'Sitemap',
+      privacyBadge: '100% Private (Client-Side)',
+      featuresBadge: '1,500+ Google Fonts • Script Union • CAD DXF',
     },
   },
   zh: {
     site: {
       name: 'FontSVG',
       tagline: 'Google 字体与本地字体转 SVG 路径',
-      title: 'FontSVG — 字体转 SVG 路径与 CAD DXF 矢量生成器 | 支持 Google 字体与本地字体上传',
+      title: 'Google 字体与本地字体转 SVG 路径 / CAD DXF 在线生成器 | FontSVG',
       description:
-        '免费在线字体矢量化工具。支持 1,500+ Google 字体与本地上传 TTF、OTF、WOFF 字体文件，一键转换为纯净矢量 SVG 路径（<path d="..." />）与 CAD DXF 轮廓线。支持连笔草书自动合并（Union）、字距调整、多行排版，100% 浏览器本地离线解析，隐私零泄露。',
+        '免费在线将 Google 字体与本地 TTF/OTF/WOFF 字体转换为纯净矢量 SVG 路径（<path d="..." />）与 CAD DXF 轮廓线。支持连笔草书自动合并（Union）、字距调整，100% 浏览器本地离线解析，隐私零泄露。',
       keywords:
-        '字体转svg, 字体转svg路径, 文字转矢量线框, ttf转svg, otf转svg, woff转svg, 字体转dxf, 激光雕刻字体轮廓, 连笔字合并, 汉字转svg路径, 本地字体上传, 纯前端字体转换, 免费字体矢量化, 文字转CAD',
+        'google字体转svg, 字体转svg路径, google font to svg path, 文字转矢量线框, ttf转svg, otf转svg, woff转svg, 字体转dxf, 激光雕刻字体轮廓, 连笔字合并, 汉字转svg路径, 本地字体上传, 纯前端字体转换, 免费字体矢量化, 文字转CAD',
     },
     nav: {
       home: '首页',
@@ -135,6 +137,8 @@ export const i18nData = {
       attribution: '基于 MIT 协议完全开源。',
       upstreamNotice: '基于 Dan Marshall 原开源项目构建。',
       sitemap: '站点地图',
+      privacyBadge: '100% 浏览器本地解析 (零上传)',
+      featuresBadge: '1,500+ Google 字体 • 连笔草书合并 • CAD DXF 导出',
     },
   },
 } as const;

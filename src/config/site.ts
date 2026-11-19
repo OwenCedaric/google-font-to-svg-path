@@ -1,12 +1,12 @@
 export const siteConfig = {
   name: 'FontSVG',
   shortName: 'FontSVG',
-  tagline: 'Google Font & Custom Font to SVG Path',
-  title: 'FontSVG — Google Font & Custom Font to SVG Path / CAD DXF Converter',
+  tagline: 'Google Font to SVG Path & CAD DXF Converter',
+  title: 'Google Font to SVG Path Converter — Free Online Tool | FontSVG',
   description:
-    'Free online vector font converter. Convert 1,500+ Google Fonts or upload custom font files (TTF, OTF, WOFF) into clean vector SVG paths (<path d="...">) and CAD DXF outlines. Features script union welding, kerning, multi-line formatting, and 100% private in-browser processing.',
+    'Convert Google Fonts and custom fonts (TTF, OTF, WOFF) to clean vector SVG paths (<path d="...">) and CAD DXF outlines for free. 100% private in-browser.',
   keywords:
-    'google font to svg, font to svg path, upload font to svg, custom font to svg, ttf to svg, otf to svg converter, woff to svg, convert font to vector, text to svg path, font to dxf, text to vector outline, font vectorizer, cnc font path, laser cutting text vector, cursive font union, svg path generator, font outline extractor',
+    'google font to svg path, google font svg path, google font to svg, google fonts to svg, google fonts to svg path, font to svg path, font to svg, upload font to svg, custom font to svg, ttf to svg, otf to svg converter, woff to svg, convert font to vector, text to svg path, font to dxf, laser cutting text vector, cursive font union, svg path generator, font outline extractor, cjk font to svg',
   
   // Production URL and Base Path
   url: 'https://fontsvg.ceda.is',

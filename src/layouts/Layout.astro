@@ -40,6 +40,7 @@ const zhCanonicalURL = new URL(zhPath, siteConfig.url).href;
 
 const homeLink = isZh ? '/zh/' : '/';
 const aboutLink = isZh ? '/zh/about/' : '/about/';
+const isHome = currentPath === '/' || currentPath === '/zh/' || currentPath === '/zh';
 
 const jsonLd = isZh
   ? {
@@ -47,9 +48,16 @@ const jsonLd = isZh
       "@graph": [
         {
           "@type": "WebApplication",
-          "@id": `${siteConfig.url}/zh/#webapp`,
-          "name": `${siteConfig.name} - ${i18n.site.tagline}`,
-          "url": `${siteConfig.url}/zh/`,
+          "@id": `${canonicalURL}#webapp`,
+          "name": "FontSVG - Google 字体与本地字体转 SVG 路径 / CAD DXF 矢量生成器",
+          "alternateName": [
+            "FontSVG",
+            "Google 字体转 SVG",
+            "字体转 SVG 路径",
+            "文字转 CAD DXF",
+            "Google Font to SVG Path"
+          ],
+          "url": canonicalURL,
           "description": description,
           "inLanguage": "zh-CN",
           "applicationCategory": "DesignApplication",
@@ -83,7 +91,7 @@ const jsonLd = isZh
         },
         {
           "@type": "HowTo",
-          "@id": `${siteConfig.url}/zh/#howto`,
+          "@id": `${canonicalURL}#howto`,
           "name": "如何将 Google 字体或本地上传字体转换为 SVG 矢量路径与 CAD DXF",
           "description": "通过 FontSVG 在线将 Google 字体或本地电脑字体文件（TTF/OTF/WOFF）快速提取为平滑矢量路径与 CAD 图纸的图文指南。",
           "inLanguage": "zh-CN",
@@ -112,7 +120,7 @@ const jsonLd = isZh
         },
         {
           "@type": "FAQPage",
-          "@id": `${siteConfig.url}/zh/about/#faq`,
+          "@id": `${canonicalURL}#faq`,
           "inLanguage": "zh-CN",
           "mainEntity": [
             {
@@ -164,9 +172,15 @@ const jsonLd = isZh
       "@graph": [
         {
           "@type": "WebApplication",
-          "@id": `${siteConfig.url}/#webapp`,
-          "name": `${siteConfig.name} - ${siteConfig.tagline}`,
-          "url": `${siteConfig.url}/`,
+          "@id": `${canonicalURL}#webapp`,
+          "name": "Google Font to SVG Path Converter - FontSVG",
+          "alternateName": [
+            "FontSVG",
+            "Google Fonts to SVG Path",
+            "Font to SVG Path Converter",
+            "Font to DXF Outline Generator"
+          ],
+          "url": canonicalURL,
           "description": description,
           "inLanguage": "en",
           "applicationCategory": "DesignApplication",
@@ -200,7 +214,7 @@ const jsonLd = isZh
         },
         {
           "@type": "HowTo",
-          "@id": `${siteConfig.url}/#howto`,
+          "@id": `${canonicalURL}#howto`,
           "name": "How to Convert Google Fonts or Custom Fonts (TTF/OTF/WOFF) to SVG Paths & CAD DXF",
           "description": "Step-by-step tutorial to convert any Google Font or user-uploaded local font file into clean, scalable SVG paths (<path d='...'>) and CAD DXF drawings.",
           "inLanguage": "en",
@@ -229,7 +243,7 @@ const jsonLd = isZh
         },
         {
           "@type": "FAQPage",
-          "@id": `${siteConfig.url}/about#faq`,
+          "@id": `${canonicalURL}#faq`,
           "inLanguage": "en",
           "mainEntity": [
             {
@@ -246,6 +260,14 @@ const jsonLd = isZh
               "acceptedAnswer": {
                 "@type": "Answer",
                 "text": "Yes! You can upload your own font files (.ttf, .otf, .woff, or .woff2) via the Font settings panel. All font parsing and vectorization is executed directly in your browser using OpenType.js without uploading files to any remote server."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Does FontSVG support Japanese, Chinese, and non-Latin character sets?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes! FontSVG fully supports Japanese (Kanji, Hiragana, Katakana) and Chinese fonts. You can choose from recommended CJK Google Fonts (such as Noto Sans JP, Noto Serif JP, Ma Shan Zheng) or upload any custom CJK font file (.ttf/.otf) for instant local vectorization."
               }
             },
             {
@@ -342,7 +364,11 @@ const jsonLd = isZh
           </svg>
           <div class="brand-text">
             <span class="brand-name">{siteConfig.name}</span>
-            <span class="brand-tagline">{i18n.site.tagline}</span>
+            {isHome ? (
+              <h1 class="brand-tagline">{i18n.site.tagline}</h1>
+            ) : (
+              <span class="brand-tagline">{i18n.site.tagline}</span>
+            )}
           </div>
         </a>
 
@@ -390,10 +416,27 @@ const jsonLd = isZh
     </header>
 
     {isApp ? (
-      <div class="container">
-        <slot name="content" />
-        <slot />
-      </div>
+      <>
+        <div class="container">
+          <slot name="content" />
+          <slot />
+        </div>
+        <footer class="app-status-bar">
+          <div class="status-left">
+            <span class="status-badge"><i class="ri-shield-check-line"></i> {i18n.footer.privacyBadge}</span>
+            <span class="status-sep">•</span>
+            <span class="status-features">{i18n.footer.featuresBadge}</span>
+          </div>
+          <div class="status-right">
+            <a href={aboutLink} class="status-link"><i class="ri-book-open-line"></i> {i18n.nav.about}</a>
+            <a href={`${aboutLink}#features`} class="status-link">{i18n.nav.features}</a>
+            <a href={`${aboutLink}#custom-fonts`} class="status-link">{i18n.nav.customFonts}</a>
+            <a href={`${aboutLink}#faq`} class="status-link">{i18n.nav.faq}</a>
+            <a href="/sitemap.xml" target="_blank" rel="noopener noreferrer" class="status-link"><i class="ri-node-tree"></i> {i18n.footer.sitemap}</a>
+            <a href={siteConfig.links.github} target="_blank" rel="noopener noreferrer" class="status-link" aria-label="GitHub Repository"><i class="ri-github-fill"></i> GitHub</a>
+          </div>
+        </footer>
+      </>
     ) : (
       <main class="site-main">
         <slot />
