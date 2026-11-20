@@ -1,0 +1,174 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { POPULAR_FONTS, type FontItem } from '../../data/fontsData';
+import 'remixicon/fonts/remixicon.css';
+import '../../styles/index.css';
+
+export function getStaticPaths() {
+  return POPULAR_FONTS.map(font => ({
+    params: { font: font.slug },
+    props: { font },
+  }));
+}
+
+interface Props {
+  font: FontItem;
+}
+
+const { font } = Astro.props;
+
+const pageTitle = `${font.name} to SVG Path & CAD DXF Converter — Free Online Tool | FontSVG`;
+const pageDescription = `Convert ${font.name} font into clean SVG paths (<path d="...">) and CAD DXF outlines for free in your browser. Features boolean union welding for ${font.name} outlines.`;
+const relatedFonts = POPULAR_FONTS.filter(f => f.slug !== font.slug && f.category === font.category).slice(0, 8);
+const toolUrl = `/?font=${encodeURIComponent(font.name)}&union=${font.recommendedUnion}&text=${encodeURIComponent(font.defaultText)}`;
+---
+
+<Layout
+  isApp={false}
+  lang="en"
+  title={pageTitle}
+  description={pageDescription}
+>
+  <div class="about-page">
+    <header class="about-hero">
+      <div class="seo-container">
+        <span class="badge"><i class="ri-font-size"></i> {font.category.toUpperCase()} TYPOGRAPHY</span>
+        <h1 class="hero-title">Convert {font.name} to SVG Paths &amp; CAD Outlines</h1>
+        <p class="hero-subtitle">
+          {font.descriptionEn}
+        </p>
+        <div class="hero-actions">
+          <a href={toolUrl} class="btn btn-primary">
+            <i class="ri-magic-line"></i>
+            <span>Launch {font.name} in Web Tool</span>
+          </a>
+          <a href="/fonts/" class="btn btn-outline">
+            <i class="ri-arrow-left-line"></i>
+            <span>All Fonts</span>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Dedicated Font Typography & Vectorization Guide -->
+    <section class="seo-section" id="overview">
+      <div class="seo-container">
+        <div class="features-grid">
+          <article class="feature-card">
+            <div class="feature-icon"><i class="ri-magic-line"></i></div>
+            <h3>Recommended Applications</h3>
+            <p>{font.bestForEn}</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon"><i class="ri-shape-line"></i></div>
+            <h3>Welding Recommendation</h3>
+            <p>
+              {font.recommendedUnion ? (
+                <>
+                  <strong>Union Recommended:</strong> As a flowing script font, overlapping strokes should be welded together to prevent laser cutters and vinyl blades from cutting interior joints.
+                </>
+              ) : (
+                <>
+                  <strong>Standard Outline:</strong> This font features distinct glyph boundaries. Union welding is optional unless you type overlapping ligatures.
+                </>
+              )}
+            </p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon"><i class="ri-ruler-2-line"></i></div>
+            <h3>CAD &amp; CNC Ready</h3>
+            <p>
+              Export {font.name} letterings directly into Autodesk DXF files formatted in millimeters or inches for LightBurn, RDWorks, and CNC routers.
+            </p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon"><i class="ri-shield-check-line"></i></div>
+            <h3>100% In-Browser Privacy</h3>
+            <p>
+              Rendered client-side via OpenType.js. Zero server uploads. Export raw <code>&lt;path d="..."&gt;</code> coordinates directly into your clipboard.
+            </p>
+          </article>
+        </div>
+
+        <!-- Specimen Display -->
+        <div class="font-preview-specimen">
+          {font.name} • ABCDEFGHIJKLMNOPQRSTUVWXYZ • 0123456789
+        </div>
+      </div>
+    </section>
+
+    <!-- Step-by-Step Guide for this Font -->
+    <section class="seo-section bg-alt">
+      <div class="seo-container">
+        <div class="section-header">
+          <span class="badge"><i class="ri-book-open-line"></i> Quick Guide</span>
+          <h2>How to Vectorize {font.name} Text</h2>
+          <p class="subtitle">Follow these quick steps to get clean vectors or CAD files for {font.name}.</p>
+        </div>
+
+        <div class="steps-grid">
+          <div class="step-card">
+            <div class="step-number">1</div>
+            <h3>Open in Tool</h3>
+            <p>Click the launch button to open the web workstation with <strong>{font.name}</strong> pre-loaded.</p>
+          </div>
+
+          <div class="step-card">
+            <div class="step-number">2</div>
+            <h3>Adjust Size &amp; Kerning</h3>
+            <p>Tune font size and letter spacing to fit your specific vinyl sign, laser cut plate, or UI canvas.</p>
+          </div>
+
+          <div class="step-card">
+            <div class="step-number">3</div>
+            <h3>Verify Union Setting</h3>
+            <p>
+              {font.recommendedUnion ? 'Keep "Union" checked to weld overlapping letter strokes into one piece.' : 'Keep "Union" unchecked for separated letterforms.'}
+            </p>
+          </div>
+
+          <div class="step-card">
+            <div class="step-number">4</div>
+            <h3>Export SVG or DXF</h3>
+            <p>Click "Copy SVG" for React/codebases, or download SVG / DXF files for your cutting machines.</p>
+          </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 3rem;">
+          <a href={toolUrl} class="btn btn-primary">
+            <i class="ri-magic-line"></i>
+            <span>Open {font.name} in Tool Now</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Related Fonts Network -->
+    {relatedFonts.length > 0 && (
+      <section class="seo-section">
+        <div class="seo-container">
+          <div class="section-header">
+            <span class="badge"><i class="ri-node-tree"></i> Related Fonts</span>
+            <h2>Similar {font.category} Fonts</h2>
+            <p class="subtitle">Explore other popular typefaces with comparable aesthetics.</p>
+          </div>
+
+          <div class="font-pills-container">
+            {relatedFonts.map(rf => (
+              <a href={`/fonts/${rf.slug}/`} class="font-pill">
+                <span>{rf.name}</span>
+                <span class="font-pill-cat">{rf.category}</span>
+              </a>
+            ))}
+            <a href="/fonts/" class="font-pill" style="border-color: #3b82f6; color: #2563eb;">
+              <span>Browse All Fonts Directory &rarr;</span>
+            </a>
+          </div>
+        </div>
+      </section>
+    )}
+  </div>
+</Layout>

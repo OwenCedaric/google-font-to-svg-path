@@ -1,0 +1,77 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import { POPULAR_FONTS } from '../../../data/fontsData';
+import 'remixicon/fonts/remixicon.css';
+import '../../../styles/index.css';
+---
+
+<Layout
+  isApp={false}
+  lang="zh"
+  title="Google 字体与中日文矢量字库目录 | FontSVG"
+  description="浏览并转换 60+ 款热门 Google 在线字体、连笔草书花体字与中日文字体为纯净 SVG 路径（<path d='...'>）与 CAD DXF 轮廓图纸。"
+>
+  <div class="about-page">
+    <header class="about-hero">
+      <div class="seo-container">
+        <span class="badge"><i class="ri-font-size"></i> 字体索引与目录</span>
+        <h1 class="hero-title">常用字体转 SVG 路径 &amp; CAD DXF 专区</h1>
+        <p class="hero-subtitle">
+          选择下方任意热门字体，进入已预设好连笔焊接与 CAD 尺寸参数的专属矢量生成页面。
+        </p>
+        <div class="hero-actions">
+          <a href="/zh/" class="btn btn-primary">
+            <i class="ri-magic-line"></i>
+            <span>打开主转换器</span>
+          </a>
+          <a href="/zh/tools/cricut-font-welder/" class="btn btn-outline">
+            <i class="ri-scissors-cut-line"></i>
+            <span>Cricut 焊接工具</span>
+          </a>
+          <a href="/zh/tools/laser-cutting-text-to-dxf/" class="btn btn-outline">
+            <i class="ri-crosshair-2-line"></i>
+            <span>激光 DXF 工具</span>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <!-- 字体列表专区 -->
+    <section class="seo-section">
+      <div class="seo-container">
+        <div class="section-header">
+          <span class="badge">精选字库</span>
+          <h2>专为创客与设计师甄选的热门字形</h2>
+          <p class="subtitle">点击卡片查看字形特性、排版建议并提取高精度矢量轮廓。</p>
+        </div>
+
+        <div class="features-grid">
+          {POPULAR_FONTS.map(font => (
+            <article class="feature-card" style="display: flex; flex-direction: column;">
+              <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem;">
+                <div class="feature-icon" style="margin-bottom: 0;"><i class="ri-font-size"></i></div>
+                <span class="font-pill-cat" style="font-size: 0.75rem; padding: 0.2rem 0.5rem;">{font.category}</span>
+              </div>
+              <h3 style="font-size: 1.25rem; margin-bottom: 0.25rem;">{font.name}</h3>
+              <p style="font-size: 0.8125rem; color: #6b7280; margin-bottom: 0.75rem; flex: 1;">
+                {font.descriptionZh}
+              </p>
+              <div style="font-size: 0.8125rem; margin-bottom: 1.25rem; background: #f9fafb; padding: 0.5rem 0.75rem; border-radius: 6px; border: 1px solid #e5e7eb;">
+                <strong style="color: #374151;">适用场景：</strong> <span style="color: #4b5563;">{font.bestForZh}</span>
+              </div>
+              <div style="display: flex; gap: 0.5rem;">
+                <a href={`/zh/fonts/${font.slug}/`} class="btn btn-primary btn-sm" style="flex: 1;">
+                  <span>字形详情与矢量</span>
+                  <i class="ri-arrow-right-line"></i>
+                </a>
+                <a href={`/zh/?font=${encodeURIComponent(font.name)}&union=${font.recommendedUnion}`} class="btn btn-outline btn-sm" title="在主工具中打开">
+                  <i class="ri-play-line"></i>
+                </a>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  </div>
+</Layout>

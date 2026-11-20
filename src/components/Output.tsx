@@ -44,17 +44,33 @@ export default function Output({ state, lang = 'en' }: OutputProps) {
   };
 
   const createLink = () => {
-    const url = window.location.href;
-    navigator.clipboard.writeText(url).then(() => {
-      const btn = document.getElementById('create-link');
-      if (btn) {
-        const originalText = btn.innerHTML;
-        btn.innerText = t.copiedLink;
-        setTimeout(() => {
-          btn.innerHTML = originalText;
-        }, 2000);
-      }
-    });
+    try {
+      const url = new URL(window.location.href);
+      if (state.fontFamily) url.searchParams.set('font', state.fontFamily);
+      if (state.fontVariant && state.fontVariant !== 'regular') url.searchParams.set('variant', state.fontVariant);
+      if (state.text) url.searchParams.set('text', state.text);
+      if (state.union) url.searchParams.set('union', 'true');
+      else url.searchParams.delete('union');
+      if (state.size && state.size !== 100) url.searchParams.set('size', String(state.size));
+      if (state.dxfUnits) url.searchParams.set('dxfUnits', state.dxfUnits);
+      if (state.filled) url.searchParams.set('filled', 'true');
+
+      const shareUrl = url.toString();
+      window.history.replaceState({}, '', shareUrl);
+
+      navigator.clipboard.writeText(shareUrl).then(() => {
+        const btn = document.getElementById('create-link');
+        if (btn) {
+          const originalText = btn.innerHTML;
+          btn.innerText = t.copiedLink;
+          setTimeout(() => {
+            btn.innerHTML = originalText;
+          }, 2000);
+        }
+      });
+    } catch (err) {
+      console.error('Failed to create link: ', err);
+    }
   };
 
   return (

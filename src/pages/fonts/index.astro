@@ -1,0 +1,86 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { POPULAR_FONTS } from '../../data/fontsData';
+import 'remixicon/fonts/remixicon.css';
+import '../../styles/index.css';
+
+const categories = [
+  { id: 'all', label: 'All Fonts' },
+  { id: 'handwriting', label: 'Cursive & Script' },
+  { id: 'sans-serif', label: 'Sans-Serif' },
+  { id: 'serif', label: 'Serif' },
+  { id: 'display', label: 'Display & Stencil' },
+  { id: 'cjk', label: 'Chinese & Japanese (CJK)' },
+];
+---
+
+<Layout
+  isApp={false}
+  lang="en"
+  title="Google Fonts & CJK Vector Font Directory | FontSVG"
+  description="Browse and convert 60+ popular Google Fonts, cursive script fonts, and CJK fonts into clean SVG vector paths (<path d='...'>) and CAD DXF drawings."
+>
+  <div class="about-page">
+    <header class="about-hero">
+      <div class="seo-container">
+        <span class="badge"><i class="ri-font-size"></i> Font Directory &amp; Catalog</span>
+        <h1 class="hero-title">Popular Fonts for SVG &amp; CAD DXF Conversion</h1>
+        <p class="hero-subtitle">
+          Select any popular typeface below to launch its dedicated vector workstation pre-configured with recommended boolean union welding and CAD cutting parameters.
+        </p>
+        <div class="hero-actions">
+          <a href="/" class="btn btn-primary">
+            <i class="ri-magic-line"></i>
+            <span>Open Converter Tool</span>
+          </a>
+          <a href="/tools/cricut-font-welder/" class="btn btn-outline">
+            <i class="ri-scissors-cut-line"></i>
+            <span>Cricut Welder</span>
+          </a>
+          <a href="/tools/laser-cutting-text-to-dxf/" class="btn btn-outline">
+            <i class="ri-crosshair-2-line"></i>
+            <span>Laser DXF Tool</span>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Font Catalog Section -->
+    <section class="seo-section">
+      <div class="seo-container">
+        <div class="section-header">
+          <span class="badge">Curated Collection</span>
+          <h2>Top Typefaces for Makers &amp; Designers</h2>
+          <p class="subtitle">Click any font card to view typography details and generate precision vectors.</p>
+        </div>
+
+        <div class="features-grid">
+          {POPULAR_FONTS.map(font => (
+            <article class="feature-card" style="display: flex; flex-direction: column;">
+              <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem;">
+                <div class="feature-icon" style="margin-bottom: 0;"><i class="ri-font-size"></i></div>
+                <span class="font-pill-cat" style="font-size: 0.75rem; padding: 0.2rem 0.5rem;">{font.category}</span>
+              </div>
+              <h3 style="font-size: 1.25rem; margin-bottom: 0.25rem;">{font.name}</h3>
+              <p style="font-size: 0.8125rem; color: #6b7280; margin-bottom: 0.75rem; flex: 1;">
+                {font.descriptionEn}
+              </p>
+              <div style="font-size: 0.8125rem; margin-bottom: 1.25rem; background: #f9fafb; padding: 0.5rem 0.75rem; border-radius: 6px; border: 1px solid #e5e7eb;">
+                <strong style="color: #374151;">Best for:</strong> <span style="color: #4b5563;">{font.bestForEn}</span>
+              </div>
+              <div style="display: flex; gap: 0.5rem;">
+                <a href={`/fonts/${font.slug}/`} class="btn btn-primary btn-sm" style="flex: 1;">
+                  <span>Details &amp; Vectors</span>
+                  <i class="ri-arrow-right-line"></i>
+                </a>
+                <a href={`/?font=${encodeURIComponent(font.name)}&union=${font.recommendedUnion}`} class="btn btn-outline btn-sm" title="Open in Interactive Tool">
+                  <i class="ri-play-line"></i>
+                </a>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  </div>
+</Layout>

@@ -59,6 +59,7 @@ body.doc-body {
   padding: 0 !important;
   height: calc(100vh - var(--header-height) - var(--status-bar-height));
   height: calc(100dvh - var(--header-height) - var(--status-bar-height));
+  min-height: 580px;
   flex-shrink: 0;
   position: relative;
   overflow: hidden;
@@ -1114,3 +1115,193 @@ details[open] summary::after {
     display: none !important;
   }
 }
+
+/* ==========================================================================
+   App Landing Main & Enhanced Components
+   ========================================================================== */
+.app-landing-main {
+  width: 100%;
+  background: #ffffff;
+}
+
+/* How-To Step Cards */
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.step-card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 1.75rem 1.5rem;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.step-card:hover {
+  transform: translateY(-2px);
+  border-color: #d1d5db;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04);
+}
+
+.step-number {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #111827;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 0.9375rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.25rem;
+}
+
+.step-card h3 {
+  font-size: 1.0625rem;
+  font-weight: 700;
+  color: #111827;
+  margin: 0 0 0.5rem;
+}
+
+.step-card p {
+  font-size: 0.875rem;
+  color: #4b5563;
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* Tool Showcase Cards */
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.tool-card {
+  display: flex;
+  flex-direction: column;
+  padding: 1.75rem;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.tool-card:hover {
+  transform: translateY(-3px);
+  border-color: #3b82f6;
+  box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.1);
+}
+
+.tool-card-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  background: #eff6ff;
+  color: #2563eb;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.tool-card h3 {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #111827;
+  margin: 0 0 0.5rem;
+}
+
+.tool-card p {
+  font-size: 0.875rem;
+  color: #4b5563;
+  line-height: 1.55;
+  margin: 0 0 1.25rem;
+  flex: 1;
+}
+
+.tool-card-cta {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #2563eb;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+/* Font Pills Matrix */
+.font-pills-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.625rem;
+  margin-top: 1.25rem;
+}
+
+.font-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 0.85rem;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  color: #1f2937;
+  font-size: 0.8125rem;
+  text-decoration: none;
+  transition: all 0.15s ease;
+}
+
+.font-pill:hover {
+  background: #ffffff;
+  border-color: #3b82f6;
+  color: #2563eb;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.font-pill-cat {
+  font-size: 0.6875rem;
+  padding: 0.1rem 0.35rem;
+  border-radius: 4px;
+  background: #f3f4f6;
+  color: #6b7280;
+}
+
+/* Font Detail Page Specials */
+.font-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.25rem 0.65rem;
+  border-radius: 6px;
+  background: #eff6ff;
+  color: #2563eb;
+  margin-bottom: 0.75rem;
+}
+
+.font-preview-specimen {
+  font-size: 2.25rem;
+  line-height: 1.3;
+  margin: 1.5rem 0;
+  padding: 2rem;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  text-align: center;
+  color: #111827;
+  overflow-x: auto;
+}
+

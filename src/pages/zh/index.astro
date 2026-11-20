@@ -16,25 +16,17 @@ import '../../styles/index.css';
     <p>
       FontSVG 是一款免费、无广告、纯前端运行的字体矢量化转换工具。支持 1,500+ 款 Google 在线字体，并支持直接上传本地电脑里的 TTF、OTF、WOFF 字体文件（包括中文字体与日文字体），毫秒级提取平滑无损的 SVG 路径（&lt;path d="..."&gt;）与 CAD DXF 轮廓线。
     </p>
-    <h3>Google 字体在线转 SVG 路径与矢量轮廓</h3>
-    <p>
-      一键搜索并渲染 Google Fonts 字体库，快速生成网页与 UI 设计所需的标准矢量 SVG &lt;path d="..."&gt; 坐标代码。
-    </p>
-    <h3>本地自定义字体上传与中日文字体支持</h3>
-    <p>
-      支持本地上传 .ttf、.otf、.woff、.woff2 字体文件。采用纯前端 OpenType.js 本地解析，文件不出设备，严格保护商用字体版权与企业隐私。全面支持中文汉字与日文假名。
-    </p>
-    <h3>连笔草书布尔合并（Union / 联集）</h3>
-    <p>
-      针对连笔字、书法字体与手写艺术字，自动消除笔画交叉重叠线，生成激光切割与 CNC 雕刻专用的单一平滑外轮廓。
-    </p>
-    <h3>工业级 CAD DXF 导出</h3>
-    <p>
-      支持选择毫米（mm）、厘米（cm）、英寸（inch）等实际物理尺寸单位，无缝导入 LightBurn、LaserCAD、Cricut、Fusion 360 等工业制造软件。
-    </p>
-    <h3>字体转 SVG 与 DXF 使用步骤</h3>
+    <h3>核心功能特点</h3>
+    <ul>
+      <li><strong>1,500+ Google 在线字体</strong>：纯前端极速搜索与渲染。</li>
+      <li><strong>本地商用字体上传</strong>：100% 浏览器本地离线解析，文件不离网，严格保障版权安全。</li>
+      <li><strong>连笔草书布尔焊接 (Union)</strong>：针对花体字与草书消除内部交叉线，生成单一平滑外轮廓，彻底避免激光雕刻和 Cricut 刻字机切烂材料。</li>
+      <li><strong>CAD DXF 工业级导出</strong>：支持毫米（mm）、厘米（cm）、英寸（inch）等实际物理单位，无缝对接 LightBurn、LaserCAD 与数控机床。</li>
+      <li><strong>前端开发者代码提取</strong>：一键复制纯净 &lt;path d&gt; 字符串，适配 React、Vue、Tailwind 与 Three.js 3D 挤压。</li>
+    </ul>
+    <h3>字体转矢量使用步骤</h3>
     <ol>
-      <li>从字体列表中选择 Google 字体，或点击“选择 .ttf / .otf / .woff 文件”载入本地字体。</li>
+      <li>选择 Google 字体或上传本地 TTF/OTF 文件。</li>
       <li>输入需要转换的文字内容，并配置字号、行高与字距。</li>
       <li>如果是连笔或手写艺术字，勾选“合并重叠路径 (Union)”消除内部交叉线。</li>
       <li>点击“复制 SVG 路径”直接取用代码，或点击“下载 SVG”与“导出 CAD DXF”保存图纸文件。</li>

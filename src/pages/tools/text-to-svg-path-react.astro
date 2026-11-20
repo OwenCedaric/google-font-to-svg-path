@@ -1,0 +1,133 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { USE_CASES } from '../../data/useCasesData';
+import { POPULAR_FONTS } from '../../data/fontsData';
+import 'remixicon/fonts/remixicon.css';
+import '../../styles/index.css';
+
+const data = USE_CASES['text-to-svg-path-react'];
+const modernFonts = POPULAR_FONTS.filter(f => f.category === 'sans-serif' || f.category === 'serif').slice(0, 12);
+const toolUrl = `/?font=${encodeURIComponent(data.initialFont)}&filled=true&text=${encodeURIComponent(data.initialText)}`;
+---
+
+<Layout
+  isApp={false}
+  lang="en"
+  title={data.seoTitleEn}
+  description={data.seoDescriptionEn}
+>
+  <div class="about-page">
+    <header class="about-hero">
+      <div class="seo-container">
+        <span class="badge"><i class="ri-reactjs-line"></i> {data.badgeEn}</span>
+        <h1 class="hero-title">{data.titleEn}</h1>
+        <p class="hero-subtitle">{data.subtitleEn}</p>
+        <div class="hero-actions">
+          <a href={toolUrl} class="btn btn-primary">
+            <i class="ri-magic-line"></i>
+            <span>Launch React Path Tool</span>
+          </a>
+          <a href="#guide" class="btn btn-outline">
+            <i class="ri-code-box-line"></i>
+            <span>Developer Guide</span>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Value Proposition Section -->
+    <section class="seo-section" id="overview">
+      <div class="seo-container">
+        <!-- Why Inline SVG Paths Win Box -->
+        <div style="background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 3.5rem;">
+          <h3 style="font-size: 1.125rem; font-weight: 700; color: #1e40af; margin: 0 0 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+            <i class="ri-flashlight-fill"></i> {data.whyTitleEn}
+          </h3>
+          <p style="font-size: 0.9375rem; color: #1e3a8a; line-height: 1.6; margin: 0;">
+            {data.whyContentEn}
+          </p>
+        </div>
+
+        <div class="features-grid">
+          {data.features.map(f => (
+            <article class="feature-card">
+              <div class="feature-icon"><i class={f.icon}></i></div>
+              <h3>{f.titleEn}</h3>
+              <p>{f.descEn}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Step-by-Step Guide -->
+    <section class="seo-section bg-alt" id="guide">
+      <div class="seo-container">
+        <div class="section-header">
+          <span class="badge"><i class="ri-code-box-line"></i> Developer Guide</span>
+          <h2>How to Embed Font Paths in React &amp; Three.js</h2>
+          <p class="subtitle">Extract clean paths and inline directly into modern component trees.</p>
+        </div>
+
+        <div class="steps-grid">
+          {data.steps.map((s, idx) => (
+            <div class="step-card">
+              <div class="step-number">{idx + 1}</div>
+              <h3>{s.titleEn}</h3>
+              <p>{s.descEn}</p>
+            </div>
+          ))}
+        </div>
+
+        <div style="text-align: center; margin-top: 3rem;">
+          <a href={toolUrl} class="btn btn-primary">
+            <i class="ri-magic-line"></i>
+            <span>Open Tool to Copy &lt;path d&gt;</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Recommended Modern Sans-Serif Fonts -->
+    <section class="seo-section" id="fonts">
+      <div class="seo-container">
+        <div class="section-header">
+          <span class="badge"><i class="ri-layout-masonry-line"></i> Clean UI Fonts</span>
+          <h2>Popular Fonts for UI Components &amp; Logomarks</h2>
+          <p class="subtitle">Tested for sharp vector curves and low node complexity.</p>
+        </div>
+
+        <div class="font-pills-container">
+          {modernFonts.map(mf => (
+            <a href={`/fonts/${mf.slug}/`} class="font-pill">
+              <span>{mf.name}</span>
+              <span class="font-pill-cat">Clean Nodes</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="seo-section bg-alt" id="faq">
+      <div class="seo-container">
+        <div class="section-header">
+          <span class="badge"><i class="ri-question-line"></i> Developer FAQ</span>
+          <h2>Frequently Asked Questions</h2>
+          <p class="subtitle">Best practices for SVG path optimization and web performance.</p>
+        </div>
+
+        <div class="faq-list">
+          {data.faq.map(item => (
+            <details class="faq-item" open>
+              <summary class="faq-question">{item.qEn}</summary>
+              <div class="faq-answer">
+                <p>{item.aEn}</p>
+              </div>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+  </div>
+</Layout>

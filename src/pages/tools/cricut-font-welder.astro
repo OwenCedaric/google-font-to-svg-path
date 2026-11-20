@@ -1,0 +1,133 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { USE_CASES } from '../../data/useCasesData';
+import { POPULAR_FONTS } from '../../data/fontsData';
+import 'remixicon/fonts/remixicon.css';
+import '../../styles/index.css';
+
+const data = USE_CASES['cricut-font-welder'];
+const scriptFonts = POPULAR_FONTS.filter(f => f.category === 'handwriting').slice(0, 12);
+const toolUrl = `/?font=${encodeURIComponent(data.initialFont)}&union=true&text=${encodeURIComponent(data.initialText)}`;
+---
+
+<Layout
+  isApp={false}
+  lang="en"
+  title={data.seoTitleEn}
+  description={data.seoDescriptionEn}
+>
+  <div class="about-page">
+    <header class="about-hero">
+      <div class="seo-container">
+        <span class="badge"><i class="ri-scissors-cut-line"></i> {data.badgeEn}</span>
+        <h1 class="hero-title">{data.titleEn}</h1>
+        <p class="hero-subtitle">{data.subtitleEn}</p>
+        <div class="hero-actions">
+          <a href={toolUrl} class="btn btn-primary">
+            <i class="ri-magic-line"></i>
+            <span>Launch Cricut Welder Tool</span>
+          </a>
+          <a href="#guide" class="btn btn-outline">
+            <i class="ri-book-open-line"></i>
+            <span>How to Weld Letters</span>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Value Proposition Section -->
+    <section class="seo-section" id="overview">
+      <div class="seo-container">
+        <!-- Deep Dive Warning / Why It Matters -->
+        <div style="background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 12px; padding: 1.5rem 1.75rem; margin-bottom: 3.5rem;">
+          <h3 style="font-size: 1.125rem; font-weight: 700; color: #1e40af; margin: 0 0 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+            <i class="ri-information-fill"></i> {data.whyTitleEn}
+          </h3>
+          <p style="font-size: 0.9375rem; color: #1e3a8a; line-height: 1.6; margin: 0;">
+            {data.whyContentEn}
+          </p>
+        </div>
+
+        <div class="features-grid">
+          {data.features.map(f => (
+            <article class="feature-card">
+              <div class="feature-icon"><i class={f.icon}></i></div>
+              <h3>{f.titleEn}</h3>
+              <p>{f.descEn}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Step-by-Step Guide -->
+    <section class="seo-section bg-alt" id="guide">
+      <div class="seo-container">
+        <div class="section-header">
+          <span class="badge"><i class="ri-book-open-line"></i> Step-by-Step Tutorial</span>
+          <h2>How to Weld Cursive Fonts for Cricut Cutting</h2>
+          <p class="subtitle">Four quick steps to cut clean vinyl lettering without Illustrator.</p>
+        </div>
+
+        <div class="steps-grid">
+          {data.steps.map((s, idx) => (
+            <div class="step-card">
+              <div class="step-number">{idx + 1}</div>
+              <h3>{s.titleEn}</h3>
+              <p>{s.descEn}</p>
+            </div>
+          ))}
+        </div>
+
+        <div style="text-align: center; margin-top: 3rem;">
+          <a href={toolUrl} class="btn btn-primary">
+            <i class="ri-magic-line"></i>
+            <span>Start Welding Now in Web Tool</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Recommended Cursive Script Fonts -->
+    <section class="seo-section" id="fonts">
+      <div class="seo-container">
+        <div class="section-header">
+          <span class="badge"><i class="ri-heart-line"></i> Top Script Fonts</span>
+          <h2>Popular Cursive Fonts for Cricut Crafting</h2>
+          <p class="subtitle">Click any font to jump into its dedicated vectorization workstation.</p>
+        </div>
+
+        <div class="font-pills-container">
+          {scriptFonts.map(sf => (
+            <a href={`/fonts/${sf.slug}/`} class="font-pill">
+              <span>{sf.name}</span>
+              <span class="font-pill-cat">Weld Ready</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="seo-section bg-alt" id="faq">
+      <div class="seo-container">
+        <div class="section-header">
+          <span class="badge"><i class="ri-question-line"></i> Cricut FAQ</span>
+          <h2>Frequently Asked Questions</h2>
+          <p class="subtitle">Everything you need to know about welding fonts for vinyl cutters.</p>
+        </div>
+
+        <div class="faq-list">
+          {data.faq.map(item => (
+            <details class="faq-item" open>
+              <summary class="faq-question">{item.qEn}</summary>
+              <div class="faq-answer">
+                <p>{item.aEn}</p>
+              </div>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+  </div>
+</Layout>

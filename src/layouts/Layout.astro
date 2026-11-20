@@ -40,6 +40,10 @@ const zhCanonicalURL = new URL(zhPath, siteConfig.url).href;
 
 const homeLink = isZh ? '/zh/' : '/';
 const aboutLink = isZh ? '/zh/about/' : '/about/';
+const fontsLink = isZh ? '/zh/fonts/' : '/fonts/';
+const cricutLink = isZh ? '/zh/tools/cricut-font-welder/' : '/tools/cricut-font-welder/';
+const laserLink = isZh ? '/zh/tools/laser-cutting-text-to-dxf/' : '/tools/laser-cutting-text-to-dxf/';
+const reactLink = isZh ? '/zh/tools/text-to-svg-path-react/' : '/tools/text-to-svg-path-react/';
 const isHome = currentPath === '/' || currentPath === '/zh/' || currentPath === '/zh';
 
 const jsonLd = isZh
@@ -374,19 +378,33 @@ const jsonLd = isZh
 
         <nav class="header-nav">
           {isApp ? (
-            <a href={aboutLink} class="nav-link">
-              <i class="ri-information-line"></i>
-              <span>{i18n.nav.about}</span>
-            </a>
+            <>
+              <a href={fontsLink} class="nav-link">
+                <i class="ri-font-size"></i>
+                <span>{isZh ? "字体库" : "Fonts"}</span>
+              </a>
+              <a href={cricutLink} class="nav-link">
+                <i class="ri-scissors-cut-line"></i>
+                <span>{isZh ? "Cricut焊接" : "Cricut Welder"}</span>
+              </a>
+              <a href={laserLink} class="nav-link">
+                <i class="ri-crosshair-2-line"></i>
+                <span>{isZh ? "激光DXF" : "Laser DXF"}</span>
+              </a>
+              <a href={aboutLink} class="nav-link">
+                <i class="ri-information-line"></i>
+                <span>{i18n.nav.about}</span>
+              </a>
+            </>
           ) : (
             <>
               <a href={homeLink} class="nav-link btn-tool-link">
                 <i class="ri-arrow-left-line"></i>
                 <span>{i18n.nav.backToApp}</span>
               </a>
+              <a href={fontsLink} class="nav-link">{isZh ? "字体库" : "Fonts"}</a>
               <a href={`${aboutLink}#features`} class="nav-link">{i18n.nav.features}</a>
-              <a href={`${aboutLink}#custom-fonts`} class="nav-link">{i18n.nav.customFonts}</a>
-              <a href={`${aboutLink}#use-cases`} class="nav-link">{i18n.nav.useCases}</a>
+              <a href={`${aboutLink}#comparison`} class="nav-link">{isZh ? "方案对比" : "Comparison"}</a>
               <a href={`${aboutLink}#faq`} class="nav-link">{i18n.nav.faq}</a>
             </>
           )}
@@ -428,9 +446,9 @@ const jsonLd = isZh
             <span class="status-features">{i18n.footer.featuresBadge}</span>
           </div>
           <div class="status-right">
+            <a href={fontsLink} class="status-link"><i class="ri-font-size"></i> {isZh ? "字体库" : "Font Directory"}</a>
             <a href={aboutLink} class="status-link"><i class="ri-book-open-line"></i> {i18n.nav.about}</a>
-            <a href={`${aboutLink}#features`} class="status-link">{i18n.nav.features}</a>
-            <a href={`${aboutLink}#custom-fonts`} class="status-link">{i18n.nav.customFonts}</a>
+            <a href={`${aboutLink}#comparison`} class="status-link">{isZh ? "方案对比" : "Comparison"}</a>
             <a href={`${aboutLink}#faq`} class="status-link">{i18n.nav.faq}</a>
             <a href="/sitemap.xml" target="_blank" rel="noopener noreferrer" class="status-link"><i class="ri-node-tree"></i> {i18n.footer.sitemap}</a>
             <a href={siteConfig.links.github} target="_blank" rel="noopener noreferrer" class="status-link" aria-label="GitHub Repository"><i class="ri-github-fill"></i> GitHub</a>

@@ -2,21 +2,85 @@ import React, { useState, useEffect } from 'react';
 import Sidebar from './Sidebar';
 import Output from './Output';
 import { loadGoogleFonts, renderSvg } from '../lib/fontUtils';
-import { defaultState } from '../store/appStore';
+import { defaultState, type AppState } from '../store/appStore';
 import { getI18n, type Lang } from '../i18n/translations';
 
 interface AppProps {
   lang?: Lang;
+  initialFont?: string;
+  initialText?: string;
+  initialUnion?: boolean;
+  initialSize?: number;
+  initialDxfUnits?: string;
+  initialFilled?: boolean;
 }
 
-export default function App({ lang = 'en' }: AppProps) {
+export default function App({
+  lang = 'en',
+  initialFont,
+  initialText,
+  initialUnion,
+  initialSize,
+  initialDxfUnits,
+  initialFilled,
+}: AppProps) {
   const t = getI18n(lang).ui;
-  const [state, setState] = useState(defaultState);
+  const [state, setState] = useState<AppState>(() => {
+    const s = { ...defaultState };
+    if (initialFont) s.fontFamily = initialFont;
+    if (initialText !== undefined) s.text = initialText;
+    if (initialUnion !== undefined) s.union = initialUnion;
+    if (initialSize !== undefined) s.size = initialSize;
+    if (initialDxfUnits !== undefined) s.dxfUnits = initialDxfUnits;
+    if (initialFilled !== undefined) s.filled = initialFilled;
+    return s;
+  });
+
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+  // Initialize from URL search parameters if available in browser
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const params = new URLSearchParams(window.location.search);
+    const updates: Partial<AppState> = {};
+
+    const qFont = params.get('font') || params.get('fontFamily');
+    if (qFont) updates.fontFamily = qFont;
+
+    const qVariant = params.get('variant') || params.get('fontVariant');
+    if (qVariant) updates.fontVariant = qVariant;
+
+    const qText = params.get('text');
+    if (qText !== null) updates.text = qText;
+
+    const qUnion = params.get('union');
+    if (qUnion !== null) updates.union = qUnion === 'true' || qUnion === '1';
+
+    const qSize = params.get('size');
+    if (qSize && !isNaN(Number(qSize))) updates.size = Number(qSize);
+
+    const qFilled = params.get('filled');
+    if (qFilled !== null) updates.filled = qFilled === 'true' || qFilled === '1';
+
+    const qUnits = params.get('dxfUnits') || params.get('units');
+    if (qUnits) updates.dxfUnits = qUnits;
+
+    const qFill = params.get('fill');
+    if (qFill) updates.fill = qFill;
+
+    const qStroke = params.get('stroke');
+    if (qStroke) updates.stroke = qStroke;
+
+    if (Object.keys(updates).length > 0) {
+      setState(prev => ({ ...prev, ...updates }));
+    }
+  }, []);
 
   useEffect(() => {
     loadGoogleFonts().then(data => {
       setState(prev => ({ ...prev, fontList: data }));
+    }).catch(err => {
+      console.warn('Failed to load Google Fonts catalog:', err);
     });
   }, []);
 
